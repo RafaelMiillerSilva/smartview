@@ -42,13 +42,25 @@ def save_connection_json(server, database, username, password, windows_auth=Fals
     log(f"Arquivo {JSON_FILE.name} atualizado com sucesso.")
 
 def load_connection_json():
-    """Carrega dados de conexão do connection.json"""
-    if JSON_FILE.exists():
-        with open(JSON_FILE, "r") as f:
-            data = json.load(f)
-        log(f"Arquivo {JSON_FILE.name} carregado com sucesso.")
-        return data
-    return None
+    """Carrega dados de conexão do connection.json ou cria um modelo se não existir"""
+    if not JSON_FILE.exists():
+        # Cria arquivo com valores padrão
+        default_data = {
+            "server": "",
+            "database": "",
+            "username": "",
+            "password": "",
+            "windows_auth": True
+        }
+        with open(JSON_FILE, "w") as f:
+            json.dump(default_data, f, indent=4)
+        log(f"Arquivo {JSON_FILE.name} não existia e foi criado com valores padrão.")
+        return default_data
+
+    with open(JSON_FILE, "r") as f:
+        data = json.load(f)
+    log(f"Arquivo {JSON_FILE.name} carregado com sucesso.")
+    return data
 
 def list_databases(server, username, password, windows_auth=False):
     """Retorna lista de bancos disponíveis no servidor"""

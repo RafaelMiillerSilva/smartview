@@ -1,18 +1,23 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-*.sqlite3
-
 # Virtual Environment
 .venv/
 env/
 venv/
 
-# IDE/Editor
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# IDEs
 .vscode/
 .idea/
 
+# Connection JSON (não versionar credenciais)
+**/connection.json
+
 # Logs
 *.log
+
+# OS files
+.DS_Store
+Thumbs.db
