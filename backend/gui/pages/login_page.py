@@ -1,6 +1,6 @@
 import sys
 from pathlib import Path
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox, QFrame
+from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox, QFrame, QDialog, QPlainTextEdit
 from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QGuiApplication
 from utils.connection import connect_to_database, list_databases, load_connection_json, log
@@ -88,20 +88,12 @@ class LoginPage(QWidget):
 
         self.toggle_auth_mode()
         self.setFixedSize(500, 400)
-        QTimer.singleShot(1, self.center_on_screen)
+    
 
     # -------------------
     # MÉTODOS
     # -------------------
-    def center_on_screen(self):
-        screen = QGuiApplication.primaryScreen()
-        if not screen:
-            return
-        screen_geometry = screen.availableGeometry()
-        window_geometry = self.frameGeometry()
-        window_geometry.moveCenter(screen_geometry.center())
-        self.move(window_geometry.topLeft())
-
+    
     def toggle_auth_mode(self):
         is_windows_auth = self.checkbox_windows_auth.isChecked()
         self.input_user.setDisabled(is_windows_auth)
@@ -111,6 +103,28 @@ class LoginPage(QWidget):
         original_style = button.styleSheet()
         button.setStyleSheet(f"background-color: {color}; color: white; font-weight: bold;")
         QTimer.singleShot(600, lambda: button.setStyleSheet(original_style))
+
+
+    def show_error_dialog(self, title: str, message: str):
+        dialog = QDialog(self)
+        dialog.setWindowTitle(title)
+        dialog.setMinimumWidth(500)
+
+        layout = QVBoxLayout(dialog)
+        label = QLabel("Detalhes do erro:")
+        text_box = QPlainTextEdit()
+        text_box.setPlainText(message)
+        text_box.setReadOnly(True)
+        text_box.setStyleSheet("background-color: #222; color: #ddd; font-family: Consolas; font-size: 11pt;")
+
+        btn_close = QPushButton("Fechar")
+        btn_close.clicked.connect(dialog.close)
+
+        layout.addWidget(label)
+        layout.addWidget(text_box)
+        layout.addWidget(btn_close)
+
+        dialog.exec()
 
     def try_connect_server(self):
         server = self.input_server.text().strip()
@@ -129,13 +143,16 @@ class LoginPage(QWidget):
         else:
             self.combo_database.setEnabled(False)
             self.button_continue.setEnabled(False)
-            self.label_error.setText("❌ Erro servidor: " + str(result))
+            self.label_error.setText("❌ Erro servidor — veja detalhes.")
             self.animate_button(self.button_connect_server, "red")
+            self.show_error_dialog("Erro ao conectar ao servidor", str(result))
+
 
     def try_connect_database(self):
         server = self.input_server.text().strip()
         database = self.combo_database.currentText().strip()
         windows_auth = self.checkbox_windows_auth.isChecked()
+
         if windows_auth:
             user = ""
             password = ""
@@ -146,6 +163,10 @@ class LoginPage(QWidget):
         ok, message = connect_to_database(server, user, password, database, windows_auth)
         if ok:
             self.label_error.setText("✅ " + message)
-            self.on_connect()
+
+            # 🔹 Passa servidor e banco para o callback
+            self.on_connect(server, database)
+
         else:
-            self.label_error.setText("❌ Erro: " + message)
+            self.label_error.setText("❌ Erro ao conectar ao banco — veja detalhes.")
+            self.show_error_dialog("Erro ao conectar ao banco", message)
