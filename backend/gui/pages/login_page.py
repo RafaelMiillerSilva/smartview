@@ -143,7 +143,7 @@ class LoginPage(QWidget):
         else:
             self.combo_database.setEnabled(False)
             self.button_continue.setEnabled(False)
-            self.label_error.setText("❌ Erro servidor — veja detalhes.")
+            self.label_error.setText("❌ Erro servidor")
             self.animate_button(self.button_connect_server, "red")
             self.show_error_dialog("Erro ao conectar ao servidor", str(result))
 
@@ -164,9 +164,9 @@ class LoginPage(QWidget):
         if ok:
             self.label_error.setText("✅ " + message)
 
-            # 🔹 Passa servidor e banco para o callback
+            #Passa servidor e banco para o callback
             self.on_connect(server, database)
 
         else:
-            self.label_error.setText("❌ Erro ao conectar ao banco — veja detalhes.")
+            self.label_error.setText("❌ Erro ao conectar ao banco")
             self.show_error_dialog("Erro ao conectar ao banco", message)
