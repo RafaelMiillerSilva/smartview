@@ -17,65 +17,175 @@ class LoginPage(QWidget):
     def __init__(self, on_connect):
         super().__init__()
         self.on_connect = on_connect
+        
+        # Define fundo da página
+        self.setStyleSheet("background-color: #f5f5f5;")
+        
         layout = QVBoxLayout()
+        layout.setContentsMargins(30, 30, 30, 30)
+        layout.setSpacing(15)
         self.setLayout(layout)
 
         # -------------------
         # BLOCO: Conexão Servidor
         # -------------------
         server_frame = QFrame()
+        server_frame.setStyleSheet("""
+            QFrame {
+                background-color: white;
+                border-radius: 8px;
+                padding: 15px;
+            }
+        """)
         server_layout = QVBoxLayout(server_frame)
 
         lbl_server = QLabel("Servidor:")
+        lbl_server.setStyleSheet("font-weight: bold; margin-top: 5px; color: #333;")
         self.input_server = QLineEdit()
         self.input_server.setPlaceholderText("Ex: localhost, DESKTOP\\SQLEXPRESS")
+        self.input_server.setStyleSheet("""
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            background-color: white;
+        """)
         server_layout.addWidget(lbl_server)
         server_layout.addWidget(self.input_server)
 
         self.checkbox_windows_auth = QCheckBox("Usar autenticação do Windows")
         self.checkbox_windows_auth.setChecked(True)
         self.checkbox_windows_auth.stateChanged.connect(self.toggle_auth_mode)
+        self.checkbox_windows_auth.setStyleSheet("""
+            color: #333;
+            font-size: 13px;
+        """)
         server_layout.addWidget(self.checkbox_windows_auth)
 
         lbl_user = QLabel("Usuário:")
+        lbl_user.setStyleSheet("font-weight: bold; margin-top: 10px; color: #333;")
         self.input_user = QLineEdit()
         self.input_user.setPlaceholderText("Usuário (SQL Authentication)")
+        self.input_user.setStyleSheet("""
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            background-color: white;
+        """)
         server_layout.addWidget(lbl_user)
         server_layout.addWidget(self.input_user)
 
         lbl_pass = QLabel("Senha:")
+        lbl_pass.setStyleSheet("font-weight: bold; margin-top: 10px; color: #333;")
         self.input_password = QLineEdit()
         self.input_password.setPlaceholderText("Senha")
         self.input_password.setEchoMode(QLineEdit.EchoMode.Password)
+        self.input_password.setStyleSheet("""
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            background-color: white;
+        """)
         server_layout.addWidget(lbl_pass)
         server_layout.addWidget(self.input_password)
 
-        self.button_connect_server = QPushButton("Conectar")
+        self.button_connect_server = QPushButton("Conectar ao Servidor")
         self.button_connect_server.clicked.connect(self.try_connect_server)
+        self.button_connect_server.setStyleSheet("""
+            QPushButton {
+                background-color: #2596be;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: 600;
+            }
+            QPushButton:hover {
+                background-color: #1a7a9e;
+            }
+            QPushButton:pressed {
+                background-color: #156380;
+            }
+        """)
         server_layout.addWidget(self.button_connect_server)
 
-        layout.addWidget(QLabel("🔌 Conexão com Servidor"))
+        section_title1 = QLabel("🔌 Conexão com Servidor")
+        section_title1.setStyleSheet("""
+            font-size: 16px;
+            font-weight: bold;
+            color: #2596be;
+            margin-top: 10px;
+            margin-bottom: 5px;
+        """)
+        layout.addWidget(section_title1)
         layout.addWidget(server_frame)
 
         # -------------------
         # BLOCO: Conexão Banco
         # -------------------
         db_frame = QFrame()
+        db_frame.setStyleSheet("""
+            QFrame {
+                background-color: white;
+                border-radius: 8px;
+                padding: 15px;
+            }
+        """)
         db_layout = QVBoxLayout(db_frame)
 
         lbl_db = QLabel("Banco de Dados:")
+        lbl_db.setStyleSheet("font-weight: bold; margin-top: 5px; color: #333;")
         self.combo_database = QComboBox()
         self.combo_database.setEditable(True)
         self.combo_database.setEnabled(False)
+        self.combo_database.setStyleSheet("""
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 13px;
+            background-color: white;
+        """)
         db_layout.addWidget(lbl_db)
         db_layout.addWidget(self.combo_database)
 
-        self.button_continue = QPushButton("Continuar")
+        self.button_continue = QPushButton("Conectar ao Banco")
         self.button_continue.setEnabled(False)
         self.button_continue.clicked.connect(self.try_connect_database)
+        self.button_continue.setStyleSheet("""
+            QPushButton {
+                background-color: #2596be;
+                color: white;
+                padding: 10px;
+                border: none;
+                border-radius: 5px;
+                font-size: 14px;
+                font-weight: 600;
+            }
+            QPushButton:hover {
+                background-color: #1a7a9e;
+            }
+            QPushButton:pressed {
+                background-color: #156380;
+            }
+            QPushButton:disabled {
+                background-color: #cccccc;
+                color: #666666;
+            }
+        """)
         db_layout.addWidget(self.button_continue)
 
-        layout.addWidget(QLabel("📂 Conexão com Banco de Dados"))
+        section_title2 = QLabel("📂 Conexão com Banco de Dados")
+        section_title2.setStyleSheet("""
+            font-size: 16px;
+            font-weight: bold;
+            color: #2596be;
+            margin-top: 15px;
+            margin-bottom: 5px;
+        """)
+        layout.addWidget(section_title2)
         layout.addWidget(db_frame)
 
         # -------------------
@@ -83,6 +193,12 @@ class LoginPage(QWidget):
         # -------------------
         self.label_error = QLabel("")
         self.label_error.setAlignment(Qt.AlignCenter)
+        self.label_error.setStyleSheet("""
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px;
+            border-radius: 5px;
+        """)
         layout.addWidget(self.label_error)
 
         # -------------------
@@ -101,7 +217,6 @@ class LoginPage(QWidget):
                 self.button_continue.setEnabled(True)
 
         self.toggle_auth_mode()
-        self.setFixedSize(500, 400)
 
     # -------------------
     # MÉTODOS
@@ -112,31 +227,66 @@ class LoginPage(QWidget):
         self.input_user.setDisabled(is_windows_auth)
         self.input_password.setDisabled(is_windows_auth)
 
-    def animate_button(self, button, color):
-        """Anima visualmente o botão de conexão"""
+    def animate_button(self, button, success: bool):
+        """Anima visualmente o botão"""
         original_style = button.styleSheet()
-        button.setStyleSheet(f"background-color: {color}; color: white; font-weight: bold;")
+        if success:
+            button.setStyleSheet("""
+                background-color: #28a745;
+                color: white;
+                font-weight: bold;
+            """)
+        else:
+            button.setStyleSheet("""
+                background-color: #dc3545;
+                color: white;
+                font-weight: bold;
+            """)
         QTimer.singleShot(600, lambda: button.setStyleSheet(original_style))
 
     def show_error_dialog(self, title: str, message: str):
         """Exibe diálogo de erro com texto detalhado"""
         dialog = QDialog(self)
         dialog.setWindowTitle(title)
-        dialog.setMinimumWidth(500)
+        dialog.setMinimumSize(600, 400)
 
         layout = QVBoxLayout(dialog)
+        
         label = QLabel("Detalhes do erro:")
+        label.setStyleSheet("font-weight: bold; margin-bottom: 10px; color: #333;")
+        
         text_box = QPlainTextEdit()
         text_box.setPlainText(message)
         text_box.setReadOnly(True)
-        text_box.setStyleSheet("background-color: #222; color: #ddd; font-family: Consolas; font-size: 11pt;")
+        text_box.setStyleSheet("""
+            background-color: #2b2b2b;
+            color: #f0f0f0;
+            font-family: 'Consolas', 'Monaco', monospace;
+            font-size: 11pt;
+            padding: 10px;
+            border: 1px solid #444;
+            border-radius: 5px;
+        """)
 
         btn_close = QPushButton("Fechar")
+        btn_close.setStyleSheet("""
+            QPushButton {
+                background-color: #2596be;
+                color: white;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                font-weight: 600;
+            }
+            QPushButton:hover {
+                background-color: #1a7a9e;
+            }
+        """)
         btn_close.clicked.connect(dialog.close)
 
         layout.addWidget(label)
         layout.addWidget(text_box)
-        layout.addWidget(btn_close)
+        layout.addWidget(btn_close, alignment=Qt.AlignRight)
 
         dialog.exec()
 
@@ -156,7 +306,15 @@ class LoginPage(QWidget):
             self.combo_database.setEnabled(True)
             self.button_continue.setEnabled(True)
             self.label_error.setText("✅ Servidor conectado! Selecione o banco.")
-            self.animate_button(self.button_connect_server, "green")
+            self.label_error.setStyleSheet("""
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #d4edda;
+                color: #155724;
+            """)
+            self.animate_button(self.button_connect_server, True)
 
             # Salva conexão parcial
             save_connection_json(server, "", user, password, windows_auth)
@@ -165,7 +323,15 @@ class LoginPage(QWidget):
             self.combo_database.setEnabled(False)
             self.button_continue.setEnabled(False)
             self.label_error.setText("❌ Erro ao conectar ao servidor")
-            self.animate_button(self.button_connect_server, "red")
+            self.label_error.setStyleSheet("""
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #f8d7da;
+                color: #721c24;
+            """)
+            self.animate_button(self.button_connect_server, False)
             self.show_error_dialog("Erro ao conectar ao servidor", str(result))
 
     # -------------------
@@ -182,7 +348,15 @@ class LoginPage(QWidget):
         ok, message = connect_to_database(server, user, password, database, windows_auth)
         if ok:
             self.label_error.setText("✅ " + message)
-            self.animate_button(self.button_continue, "green")
+            self.label_error.setStyleSheet("""
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #d4edda;
+                color: #155724;
+            """)
+            self.animate_button(self.button_continue, True)
 
             # salva no connection.json
             save_connection_json(server, database, user, password, windows_auth)
@@ -192,5 +366,13 @@ class LoginPage(QWidget):
             self.on_connect(server, database)
         else:
             self.label_error.setText("❌ Erro ao conectar ao banco")
-            self.animate_button(self.button_continue, "red")
+            self.label_error.setStyleSheet("""
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px;
+                border-radius: 5px;
+                background-color: #f8d7da;
+                color: #721c24;
+            """)
+            self.animate_button(self.button_continue, False)
             self.show_error_dialog("Erro ao conectar ao banco", message)
