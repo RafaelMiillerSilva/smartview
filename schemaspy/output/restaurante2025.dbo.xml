@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<database name="restaurante2025" schema="dbo" type="Microsoft SQL Server - 15.00.2145">
+   <tables>
+      <table catalog="restaurante2025" name="categorias" numRows="9" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_cat" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_cat" foreignKey="FK__pratos__cod_cat__33D4B598" implied="false" onDeleteCascade="false" schema="dbo" table="pratos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="descricao" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_cat" sequenceNumberInPK="1"/>
+         <index name="pk_categorias" unique="true">
+            <column ascending="true" name="cod_cat"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="cidades" numRows="9974" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_cidade" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_cidade" foreignKey="FK__clientes__cod_ci__276EDEB3" implied="false" onDeleteCascade="false" schema="dbo" table="clientes"/>
+            <child catalog="restaurante2025" column="cod_cidade" foreignKey="fk_forn_cid" implied="false" onDeleteCascade="false" schema="dbo" table="fornecedores"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nome" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="('SP')" digits="0" id="2" name="uf" nullable="false" remarks="" size="2" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="cep_padrao" nullable="true" remarks="" size="8" type="char" typeCode="1"/>
+         <primaryKey column="cod_cidade" sequenceNumberInPK="1"/>
+         <index name="PK__cidades__9C8FF54A2FD53780" unique="true">
+            <column ascending="true" name="cod_cidade"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="clientes" numRows="500" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_cliente" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_cliente" foreignKey="FK__pedidos__cod_cli__3A81B327" implied="false" onDeleteCascade="false" schema="dbo" table="pedidos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nome" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="rg" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="cpf" nullable="true" remarks="" size="11" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="data_nasc" nullable="true" remarks="" size="6" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="Endereco" nullable="true" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="numero" nullable="true" remarks="" size="10" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="bairro" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="cod_cidade" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_cidade" foreignKey="FK__clientes__cod_ci__276EDEB3" implied="false" onDeleteCascade="false" schema="dbo" table="cidades"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="cep" nullable="true" remarks="" size="8" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="celular" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="11" name="e_mail" nullable="true" remarks="" size="100" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_cliente" sequenceNumberInPK="1"/>
+         <index name="PK__clientes__08ED61F32F3903C8" unique="true">
+            <column ascending="true" name="cod_cliente"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="composicao" numRows="13" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="false" defaultValue="null" digits="0" id="0" name="cod_prato" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_prato" foreignKey="FK__composica__cod_p__4F7CD00D" implied="false" onDeleteCascade="false" schema="dbo" table="pratos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cod_ingrediente" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_ingrediente" foreignKey="FK__composica__cod_i__5070F446" implied="false" onDeleteCascade="false" schema="dbo" table="ingredientes"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="quantidade" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <primaryKey column="cod_prato" sequenceNumberInPK="1"/>
+         <primaryKey column="cod_ingrediente" sequenceNumberInPK="2"/>
+         <index name="pk_composicao" unique="true">
+            <column ascending="true" name="cod_prato"/>
+            <column ascending="true" name="cod_ingrediente"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="compras" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_compra" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_compra" foreignKey="FK__itens_com__cod_c__59FA5E80" implied="false" onDeleteCascade="false" schema="dbo" table="itens_compra"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="data" nullable="false" remarks="" size="6" type="date" typeCode="91"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nota_fiscal" nullable="false" remarks="" size="4" type="int" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="3" name="valor_total" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="cod_fornecedor" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_fornecedor" foreignKey="FK__compras__cod_for__4CA06362" implied="false" onDeleteCascade="false" schema="dbo" table="fornecedores"/>
+         </column>
+         <primaryKey column="cod_compra" sequenceNumberInPK="1"/>
+         <index name="PK__compras__7666303ACA0457FB" unique="true">
+            <column ascending="true" name="cod_compra"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="entregadores" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_entregador" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_entregador" foreignKey="FK__pedidos__cod_ent__3B75D760" implied="false" onDeleteCascade="false" schema="dbo" table="pedidos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nome" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="celular" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_entregador" sequenceNumberInPK="1"/>
+         <index name="PK__entregad__E23013BAC9946E8F" unique="true">
+            <column ascending="true" name="cod_entregador"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="fornecedores" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_fornecedor" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_fornecedor" foreignKey="FK__compras__cod_for__4CA06362" implied="false" onDeleteCascade="false" schema="dbo" table="compras"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nome_social" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="nome_fantasia" nullable="true" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="cpnj" nullable="true" remarks="" size="16" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="endereco" nullable="true" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="numero" nullable="true" remarks="" size="10" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="bairro" nullable="true" remarks="" size="50" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="7" name="cod_cidade" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_cidade" foreignKey="fk_forn_cid" implied="false" onDeleteCascade="false" schema="dbo" table="cidades"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="8" name="cep" nullable="true" remarks="" size="8" type="char" typeCode="1"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="9" name="celular" nullable="true" remarks="" size="20" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="10" name="e_mail" nullable="true" remarks="" size="100" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_fornecedor" sequenceNumberInPK="1"/>
+         <index name="PK__forneced__CE8B719A42616283" unique="true">
+            <column ascending="true" name="cod_fornecedor"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="garcoes" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_garcom" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_garcom" foreignKey="FK__itens_ped__cod_g__5535A963" implied="false" onDeleteCascade="false" schema="dbo" table="itens_pedido"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="nome" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="celular" nullable="false" remarks="" size="20" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_garcom" sequenceNumberInPK="1"/>
+         <index name="PK__garcoes__D537DDF70C77DF86" unique="true">
+            <column ascending="true" name="cod_garcom"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="ingredientes" numRows="109" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_ingrediente" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_ingrediente" foreignKey="FK__composica__cod_i__5070F446" implied="false" onDeleteCascade="false" schema="dbo" table="composicao"/>
+            <child catalog="restaurante2025" column="cod_ingrediente" foreignKey="FK__itens_com__cod_i__59063A47" implied="false" onDeleteCascade="false" schema="dbo" table="itens_compra"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="descricao" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cod_unidade" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_unidade" foreignKey="FK__ingredien__cod_u__440B1D61" implied="false" onDeleteCascade="false" schema="dbo" table="unidades"/>
+         </column>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="3" name="controla_estoque" nullable="false" remarks="" size="1" type="bit" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="4" name="quantidade_estoque" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="valor_unitario" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <primaryKey column="cod_ingrediente" sequenceNumberInPK="1"/>
+         <index name="PK__ingredie__2B45B448EE23F259" unique="true">
+            <column ascending="true" name="cod_ingrediente"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="itens_compra" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_item" nullable="false" remarks="" size="4" type="int identity" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cod_ingrediente" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_ingrediente" foreignKey="FK__itens_com__cod_i__59063A47" implied="false" onDeleteCascade="false" schema="dbo" table="ingredientes"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cod_compra" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_compra" foreignKey="FK__itens_com__cod_c__59FA5E80" implied="false" onDeleteCascade="false" schema="dbo" table="compras"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="quantidade" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="valor_unitario" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <primaryKey column="cod_item" sequenceNumberInPK="1"/>
+         <index name="PK__itens_co__0317CA76B39641A8" unique="true">
+            <column ascending="true" name="cod_item"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="itens_pedido" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_item" nullable="false" remarks="" size="4" type="int identity" typeCode="4"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="cod_pedido" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_pedido" foreignKey="FK__itens_ped__cod_p__534D60F1" implied="false" onDeleteCascade="false" schema="dbo" table="pedidos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cod_prato" nullable="false" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_prato" foreignKey="FK__itens_ped__cod_p__5441852A" implied="false" onDeleteCascade="false" schema="dbo" table="pratos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="quantidade" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="valor_unitario" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="cod_garcom" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_garcom" foreignKey="FK__itens_ped__cod_g__5535A963" implied="false" onDeleteCascade="false" schema="dbo" table="garcoes"/>
+         </column>
+         <column autoUpdated="false" defaultValue="(getdate())" digits="3" id="6" name="data_hora" nullable="true" remarks="" size="16" type="datetime" typeCode="93"/>
+         <primaryKey column="cod_item" sequenceNumberInPK="1"/>
+         <index name="PK__itens_pe__0317CA769DCE43EB" unique="true">
+            <column ascending="true" name="cod_item"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="mesas" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_mesa" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_mesa" foreignKey="FK__pedidos__cod_mes__3C69FB99" implied="false" onDeleteCascade="false" schema="dbo" table="pedidos"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="descricao" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <primaryKey column="cod_mesa" sequenceNumberInPK="1"/>
+         <index name="PK__mesas__A12DD14B6FFADEBA" unique="true">
+            <column ascending="true" name="cod_mesa"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="pedidos" numRows="0" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_pedido" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_pedido" foreignKey="FK__itens_ped__cod_p__534D60F1" implied="false" onDeleteCascade="false" schema="dbo" table="itens_pedido"/>
+         </column>
+         <column autoUpdated="false" defaultValue="(getdate())" digits="3" id="1" name="datahora" nullable="false" remarks="" size="16" type="datetime" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cod_cliente" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_cliente" foreignKey="FK__pedidos__cod_cli__3A81B327" implied="false" onDeleteCascade="false" schema="dbo" table="clientes"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="3" name="tipo_pedido" nullable="false" remarks="" size="2" type="smallint" typeCode="5"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="4" name="cod_entregador" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_entregador" foreignKey="FK__pedidos__cod_ent__3B75D760" implied="false" onDeleteCascade="false" schema="dbo" table="entregadores"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="5" name="valor_entrega" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="6" name="cod_mesa" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_mesa" foreignKey="FK__pedidos__cod_mes__3C69FB99" implied="false" onDeleteCascade="false" schema="dbo" table="mesas"/>
+         </column>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="7" name="encerrado" nullable="false" remarks="" size="1" type="bit" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="3" id="8" name="datahora_encerramento" nullable="true" remarks="" size="16" type="datetime" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="9" name="desconto" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="10" name="pago" nullable="false" remarks="" size="1" type="bit" typeCode="-7"/>
+         <column autoUpdated="false" defaultValue="null" digits="3" id="11" name="data_pago" nullable="true" remarks="" size="16" type="datetime" typeCode="93"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="12" name="valor_pago" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="13" name="taxa_servico" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="14" name="valor_total" nullable="false" remarks="" size="8" type="float" typeCode="8"/>
+         <primaryKey column="cod_pedido" sequenceNumberInPK="1"/>
+         <index name="PK__pedidos__3392C493CDF3DD2D" unique="true">
+            <column ascending="true" name="cod_pedido"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="pratos" numRows="4" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_prato" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_prato" foreignKey="FK__composica__cod_p__4F7CD00D" implied="false" onDeleteCascade="false" schema="dbo" table="composicao"/>
+            <child catalog="restaurante2025" column="cod_prato" foreignKey="FK__itens_ped__cod_p__5441852A" implied="false" onDeleteCascade="false" schema="dbo" table="itens_pedido"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="descricao" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="cod_cat" nullable="true" remarks="" size="4" type="int" typeCode="4">
+            <parent catalog="restaurante2025" column="cod_cat" foreignKey="FK__pratos__cod_cat__33D4B598" implied="false" onDeleteCascade="false" schema="dbo" table="categorias"/>
+         </column>
+         <column autoUpdated="false" defaultValue="((0))" digits="0" id="3" name="valor_unitario" nullable="true" remarks="" size="8" type="float" typeCode="8"/>
+         <primaryKey column="cod_prato" sequenceNumberInPK="1"/>
+         <index name="PK__pratos__7F16D81A26F84343" unique="true">
+            <column ascending="true" name="cod_prato"/>
+         </index>
+      </table>
+      <table catalog="restaurante2025" name="unidades" numRows="6" remarks="" schema="dbo" type="TABLE">
+         <column autoUpdated="true" defaultValue="null" digits="0" id="0" name="cod_unidade" nullable="false" remarks="" size="4" type="int identity" typeCode="4">
+            <child catalog="restaurante2025" column="cod_unidade" foreignKey="FK__ingredien__cod_u__440B1D61" implied="false" onDeleteCascade="false" schema="dbo" table="ingredientes"/>
+         </column>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="1" name="descricao" nullable="false" remarks="" size="100" type="varchar" typeCode="12"/>
+         <column autoUpdated="false" defaultValue="null" digits="0" id="2" name="sigla" nullable="false" remarks="" size="20" type="char" typeCode="1"/>
+         <primaryKey column="cod_unidade" sequenceNumberInPK="1"/>
+         <index name="PK__unidades__F3DE4E1AF5E6FC85" unique="true">
+            <column ascending="true" name="cod_unidade"/>
+         </index>
+      </table>
+   </tables>
+</database>

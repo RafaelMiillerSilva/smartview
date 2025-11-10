@@ -2,12 +2,12 @@ import pyodbc
 import json
 from pathlib import Path
 import logging
+from backend.config.paths import ROOT_DIR, LOG_FILE, JSON_FILE
 
 # -----------------------
 # Diretórios e arquivos
 # -----------------------
-ROOT_DIR = Path(__file__).parent.resolve()
-JSON_FILE = ROOT_DIR / "connection.json"
+
 LOG_FILE = ROOT_DIR / "connection.log"
 
 # -----------------------
@@ -31,35 +31,36 @@ def log(message: str):
 def save_connection_json(server, database, username, password, windows_auth=False):
     """Salva dados de conexão no connection.json"""
     data = {
-        "server": server,
+        "host": server,
         "database": database,
-        "username": username,
+        "user": username,
         "password": password,
-        "windows_auth": windows_auth,
+        "auth": "windows" if windows_auth else "sql"
     }
-    with open(JSON_FILE, "w") as f:
-        json.dump(data, f, indent=4)
-    log(f"Arquivo {JSON_FILE.name} atualizado com sucesso.")
+    with open(JSON_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4, ensure_ascii=False)
+    log(f"✅ Arquivo {JSON_FILE.name} atualizado com sucesso.")
+
 
 def load_connection_json():
     """Carrega dados de conexão do connection.json ou cria um modelo se não existir"""
     if not JSON_FILE.exists():
-        # Cria arquivo com valores padrão
+        # Cria arquivo padrão
         default_data = {
-            "server": "",
+            "host": "",
             "database": "",
-            "username": "",
+            "user": "",
             "password": "",
-            "windows_auth": True
+            "auth": "windows"
         }
-        with open(JSON_FILE, "w") as f:
-            json.dump(default_data, f, indent=4)
-        log(f"Arquivo {JSON_FILE.name} não existia e foi criado com valores padrão.")
+        with open(JSON_FILE, "w", encoding="utf-8") as f:
+            json.dump(default_data, f, indent=4, ensure_ascii=False)
+        log(f"Arquivo {JSON_FILE.name} não existia e foi criado com valores padrão")
         return default_data
 
-    with open(JSON_FILE, "r") as f:
+    with open(JSON_FILE, "r", encoding="utf-8") as f:
         data = json.load(f)
-    log(f"Arquivo {JSON_FILE.name} carregado com sucesso.")
+    log(f"Arquivo {JSON_FILE.name} carregado com sucesso")
     return data
 
 def list_databases(server, username, password, windows_auth=False):

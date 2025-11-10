@@ -1,9 +1,17 @@
 import sys
-from pathlib import Path
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox, QComboBox, QFrame, QDialog, QPlainTextEdit
+from PySide6.QtWidgets import (
+    QWidget, QVBoxLayout, QLabel, QLineEdit, QPushButton,
+    QCheckBox, QComboBox, QFrame, QDialog, QPlainTextEdit
+)
 from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QGuiApplication
-from utils.connection import connect_to_database, list_databases, load_connection_json, log
+from utils.connection import (
+    connect_to_database,
+    list_databases,
+    load_connection_json,
+    save_connection_json,
+    log
+)
+
 
 class LoginPage(QWidget):
     def __init__(self, on_connect):
@@ -74,38 +82,44 @@ class LoginPage(QWidget):
         # Mensagem de erro/sucesso
         # -------------------
         self.label_error = QLabel("")
+        self.label_error.setAlignment(Qt.AlignCenter)
         layout.addWidget(self.label_error)
 
-        # Pré-carrega último servidor salvo
+        # -------------------
+        # Pré-carrega última conexão
+        # -------------------
         last_conn = load_connection_json()
         if last_conn:
-            if "server" in last_conn:
-                self.input_server.setText(last_conn["server"])
-            if last_conn.get("windows_auth", False):
-                self.checkbox_windows_auth.setChecked(True)
-            if "database" in last_conn:
+            self.input_server.setText(last_conn.get("server", ""))
+            self.checkbox_windows_auth.setChecked(last_conn.get("windows_auth", True))
+            if not last_conn.get("windows_auth", True):
+                self.input_user.setText(last_conn.get("username", ""))
+                self.input_password.setText(last_conn.get("password", ""))
+            if "database" in last_conn and last_conn["database"]:
                 self.combo_database.addItem(last_conn["database"])
+                self.combo_database.setEnabled(True)
+                self.button_continue.setEnabled(True)
 
         self.toggle_auth_mode()
         self.setFixedSize(500, 400)
-    
 
     # -------------------
     # MÉTODOS
     # -------------------
-    
     def toggle_auth_mode(self):
+        """Habilita/desabilita campos de usuário/senha conforme o modo"""
         is_windows_auth = self.checkbox_windows_auth.isChecked()
         self.input_user.setDisabled(is_windows_auth)
         self.input_password.setDisabled(is_windows_auth)
 
     def animate_button(self, button, color):
+        """Anima visualmente o botão de conexão"""
         original_style = button.styleSheet()
         button.setStyleSheet(f"background-color: {color}; color: white; font-weight: bold;")
         QTimer.singleShot(600, lambda: button.setStyleSheet(original_style))
 
-
     def show_error_dialog(self, title: str, message: str):
+        """Exibe diálogo de erro com texto detalhado"""
         dialog = QDialog(self)
         dialog.setWindowTitle(title)
         dialog.setMinimumWidth(500)
@@ -126,6 +140,9 @@ class LoginPage(QWidget):
 
         dialog.exec()
 
+    # -------------------
+    # CONEXÃO COM SERVIDOR
+    # -------------------
     def try_connect_server(self):
         server = self.input_server.text().strip()
         user = self.input_user.text().strip()
@@ -140,33 +157,40 @@ class LoginPage(QWidget):
             self.button_continue.setEnabled(True)
             self.label_error.setText("✅ Servidor conectado! Selecione o banco.")
             self.animate_button(self.button_connect_server, "green")
+
+            # Salva conexão parcial
+            save_connection_json(server, "", user, password, windows_auth)
+
         else:
             self.combo_database.setEnabled(False)
             self.button_continue.setEnabled(False)
-            self.label_error.setText("❌ Erro servidor")
+            self.label_error.setText("❌ Erro ao conectar ao servidor")
             self.animate_button(self.button_connect_server, "red")
             self.show_error_dialog("Erro ao conectar ao servidor", str(result))
 
-
+    # -------------------
+    # CONEXÃO COM BANCO
+    # -------------------
     def try_connect_database(self):
         server = self.input_server.text().strip()
         database = self.combo_database.currentText().strip()
         windows_auth = self.checkbox_windows_auth.isChecked()
 
-        if windows_auth:
-            user = ""
-            password = ""
-        else:
-            user = self.input_user.text().strip()
-            password = self.input_password.text().strip()
+        user = self.input_user.text().strip() if not windows_auth else ""
+        password = self.input_password.text().strip() if not windows_auth else ""
 
         ok, message = connect_to_database(server, user, password, database, windows_auth)
         if ok:
             self.label_error.setText("✅ " + message)
+            self.animate_button(self.button_continue, "green")
 
-            #Passa servidor e banco para o callback
+            # salva no connection.json
+            save_connection_json(server, database, user, password, windows_auth)
+            log(f"Conexão salva: {server} / {database}")
+
+            # Passa servidor e banco para o callback (MainWindow)
             self.on_connect(server, database)
-
         else:
             self.label_error.setText("❌ Erro ao conectar ao banco")
+            self.animate_button(self.button_continue, "red")
             self.show_error_dialog("Erro ao conectar ao banco", message)

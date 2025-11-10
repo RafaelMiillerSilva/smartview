@@ -1,11 +1,14 @@
 import sys
 from pathlib import Path
-
-ROOT_DIR = Path(__file__).parent.resolve()
-sys.path.append(str(ROOT_DIR))
-
 from PySide6.QtWidgets import QApplication
-from gui.main_window import MainWindow 
+
+
+# === Define o diretório raiz ===
+ROOT_DIR = Path(__file__).resolve().parent
+if str(ROOT_DIR) not in sys.path:
+    sys.path.insert(0, str(ROOT_DIR))
+
+from backend.gui.main_window import MainWindow
 
 def main():
     app = QApplication(sys.argv)

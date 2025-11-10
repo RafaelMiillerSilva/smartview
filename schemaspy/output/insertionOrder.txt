@@ -1,0 +1,15 @@
+cidades
+categorias
+entregadores
+garcoes
+mesas
+unidades
+clientes
+fornecedores
+ingredientes
+pratos
+compras
+pedidos
+composicao
+itens_compra
+itens_pedido
