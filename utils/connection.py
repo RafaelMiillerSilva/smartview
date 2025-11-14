@@ -69,7 +69,7 @@ def list_databases(server, username, password, windows_auth=False):
     try:
         if windows_auth:
             conn_str = (
-                f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+                f"DRIVER={{ODBC Driver 17 for SQL Server}};"
                 f"SERVER={server};"
                 f"DATABASE=master;"
                 f"Trusted_Connection=yes;"
@@ -77,7 +77,7 @@ def list_databases(server, username, password, windows_auth=False):
             )
         else:
             conn_str = (
-                f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+                f"DRIVER={{ODBC Driver 17 for SQL Server}};"
                 f"SERVER={server};"
                 f"DATABASE=master;"
                 f"UID={username};"
@@ -103,7 +103,7 @@ def connect_to_database(server, username, password, database, windows_auth=False
     try:
         if windows_auth:
             conn_str = (
-                f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+                f"DRIVER={{ODBC Driver 17 for SQL Server}};"
                 f"SERVER={server};"
                 f"DATABASE={database};"
                 f"Trusted_Connection=yes;"
@@ -111,7 +111,7 @@ def connect_to_database(server, username, password, database, windows_auth=False
             )
         else:
             conn_str = (
-                f"DRIVER={{ODBC Driver 18 for SQL Server}};"
+                f"DRIVER={{ODBC Driver 17 for SQL Server}};"
                 f"SERVER={server};"
                 f"DATABASE={database};"
                 f"UID={username};"

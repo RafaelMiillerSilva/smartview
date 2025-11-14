@@ -13,10 +13,26 @@ from backend.config.paths import (
     ROOT_DIR, JSON_FILE, LOG_FILE, SCHEMASPY_DIR, 
     SCHEMASPY_JAR, OUTPUT_DIR, GRAPHVIZ_BIN
 )
-
+import sys
 # Driver JAR
 DRIVER_JAR = SCHEMASPY_DIR / "drivers" / "mssql-jdbc-13.2.1.jre11.jar"
 
+class Logger:
+    def __init__(self, logfile):
+        self.logfile = logfile
+
+    def write(self, message):
+        with open(self.logfile, "a", encoding="utf-8") as f:
+            f.write(message)
+        # também salva no terminal (se quiser)
+        # sys.__stdout__.write(message)
+
+    def flush(self):
+        pass  # necessário para compatibilidade com stdout
+
+# Ativar redirecionamento
+sys.stdout = Logger(LOG_FILE)
+sys.stderr = Logger(LOG_FILE)
 
 def log(msg: str):
     """Registra mensagem no arquivo de log"""
@@ -39,7 +55,7 @@ class SchemaSpyThread(QThread):
         try:
             log("Thread iniciada para gerar documentacao.")
 
-            host = self.config.get("server", "localhost")
+            host = self.config.get("host", self.config.get("server", "localhost"))
             port = str(self.config.get("port", 1433))
             db = self.config.get("database", "")
             schema = self.config.get("schema", "dbo")
@@ -47,11 +63,10 @@ class SchemaSpyThread(QThread):
 
             OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-            # drivers dentro de schemaspy/drivers
             driver_jar = DRIVER_JAR
             dll_file = SCHEMASPY_DIR / "mssql-jdbc_auth-13.2.1.x64.dll"
 
-            # Validacoes
+            # Validações
             if not SCHEMASPY_JAR.exists():
                 msg = f"schemaspy-app.jar nao encontrado em {SCHEMASPY_JAR}"
                 log(f"ERRO: {msg}")
@@ -66,7 +81,7 @@ class SchemaSpyThread(QThread):
                 self.finished_signal.emit(False, "\n".join(self.error_log))
                 return
 
-            # Verifica se Java esta disponivel
+            # Verifica Java
             try:
                 java_check = subprocess.run(
                     ["java", "-version"],
@@ -90,7 +105,7 @@ class SchemaSpyThread(QThread):
                 self.finished_signal.emit(False, "\n".join(self.error_log))
                 return
 
-            # Verifica se Graphviz esta disponivel
+            # Verifica Graphviz
             try:
                 graphviz_check = subprocess.run(
                     ["dot", "-V"],
@@ -99,7 +114,6 @@ class SchemaSpyThread(QThread):
                     timeout=5
                 )
                 if graphviz_check.returncode == 0:
-                    # Pega a versao do stderr (Graphviz retorna versao no stderr)
                     version_output = graphviz_check.stderr.strip() if graphviz_check.stderr else graphviz_check.stdout.strip()
                     log(f"Graphviz detectado: {version_output}")
                 else:
@@ -113,30 +127,78 @@ class SchemaSpyThread(QThread):
             except Exception as e:
                 log(f"Erro ao verificar Graphviz: {e}")
 
-            # Use tipo compativel com SchemaSpy (ex.: mssql17 para 2017+)
-            db_type = "mssql17"
+            # Detecta se é instância nomeada
+            is_named_instance = "\\" in host
             
-            # Comando base
-            cmd = [
-                "java",
-                f"-Djava.library.path={str(SCHEMASPY_DIR)}",
-                "-jar", str(SCHEMASPY_JAR),
-                "-t", db_type,
-                "-db", db,
-                "-s", schema,
-                "-host", host,
-                "-port", port,
-                "-dp", str(driver_jar),
-                "-o", str(OUTPUT_DIR),
-                "-debug"
-            ]
+            if is_named_instance:
+                parts = host.split("\\")
+                server_name = parts[0]
+                instance_name = parts[1] if len(parts) > 1 else ""
+                log(f"Detectada instancia nomeada: {server_name}\\{instance_name}")
+            else:
+                server_name = host
+                instance_name = ""
+                log(f"Servidor padrao: {server_name}")
 
-            # Autenticacao
-            if auth == "windows" or self.config.get("windows_auth", False):
+            # Obter credenciais
+            user = self.config.get("user", self.config.get("username", ""))
+            password = self.config.get("password", "")
+            windows_auth = auth == "windows" or self.config.get("windows_auth", False)
+
+            # Criar connection string JDBC completa
+            if is_named_instance:
+                # Para instância nomeada, usar instanceName no JDBC URL
+                if windows_auth:
+                    jdbc_url = (
+                        f"jdbc:sqlserver://{server_name};"
+                        f"instanceName={instance_name};"
+                        f"databaseName={db};"
+                        f"integratedSecurity=true;"
+                        f"encrypt=true;"
+                        f"trustServerCertificate=true"
+                    )
+                else:
+                    jdbc_url = (
+                        f"jdbc:sqlserver://{server_name};"
+                        f"instanceName={instance_name};"
+                        f"databaseName={db};"
+                        f"user={user};"
+                        f"password={password};"
+                        f"encrypt=true;"
+                        f"trustServerCertificate=true"
+                    )
+                
+                # Mascarar senha no log
+                jdbc_url_masked = jdbc_url.replace(password, "****") if password else jdbc_url
+                log(f"URL JDBC (instancia nomeada): {jdbc_url_masked}")
+            else:
+                # Para servidor padrão, usar host:port tradicional
+                if windows_auth:
+                    jdbc_url = (
+                        f"jdbc:sqlserver://{server_name}:{port};"
+                        f"databaseName={db};"
+                        f"integratedSecurity=true;"
+                        f"encrypt=true;"
+                        f"trustServerCertificate=true"
+                    )
+                else:
+                    jdbc_url = (
+                        f"jdbc:sqlserver://{server_name}:{port};"
+                        f"databaseName={db};"
+                        f"user={user};"
+                        f"password={password};"
+                        f"encrypt=true;"
+                        f"trustServerCertificate=true"
+                    )
+                
+                jdbc_url_masked = jdbc_url.replace(password, "****") if password else jdbc_url
+                log(f"URL JDBC (servidor padrao): {jdbc_url_masked}")
+
+            # Configurar DLL para Windows Auth se necessário
+            if windows_auth:
                 if dll_file.exists():
                     dll_dir = str(dll_file.parent)
                     os.environ["PATH"] = f"{dll_dir}{os.pathsep}" + os.environ.get("PATH", "")
-                    cmd[1] = f"-Djava.library.path={dll_dir}"
                     
                     log(f"Windows Auth: mssql-jdbc_auth-13.2.1.x64.dll configurado:")
                     log(f"Pasta: {dll_dir}")
@@ -149,51 +211,68 @@ class SchemaSpyThread(QThread):
                     self.finished_signal.emit(False, "\n".join(self.error_log))
                     return
 
-                log("Configurando autenticacao Windows...")
+            # Criar tipo de banco customizado para usar URL completa
+            # SchemaSpy ignora connectionURL no properties, então criamos um .properties customizado
+            custom_db_type = SCHEMASPY_DIR / "mssql-custom.properties"
+            try:
+                # Conteúdo do arquivo de tipo customizado
+                # Baseado em mssql17 mas com connectionSpec vazio para forçar uso do -connprops
+                with open(custom_db_type, "w", encoding="utf-8") as f:
+                    f.write("# Custom SQL Server type for named instances\n")
+                    f.write("description=Microsoft SQL Server with custom connection\n")
+                    f.write("driver=com.microsoft.sqlserver.jdbc.SQLServerDriver\n")
+                    f.write(f"connectionSpec={jdbc_url}\n")
+                    f.write("extends=mssql05\n")
                 
-                conn_props_file = SCHEMASPY_DIR / "connection.properties"
-                try:
-                    with open(conn_props_file, "w", encoding="utf-8") as f:
-                        f.write("integratedSecurity=true\n")
-                        f.write("encrypt=true\n")
-                        f.write("trustServerCertificate=true\n")
-                    
-                    if conn_props_file.exists():
-                        with open(conn_props_file, "r", encoding="utf-8") as f:
-                            content = f.read()
-                        log(f"Arquivo de propriedades criado: {conn_props_file}")
-                        log(f"Conteudo:\n{content}")
-                    else:
-                        log(f"Arquivo nao foi criado!")
-                        
-                except Exception as e:
-                    log(f"Erro ao criar arquivo de propriedades: {e}")
+                log(f"Tipo de banco customizado criado: {custom_db_type}")
+            except Exception as e:
+                msg = f"Erro ao criar tipo customizado: {e}"
+                log(f"ERRO: {msg}")
+                self.error_log.append(msg)
+                self.finished_signal.emit(False, "\n".join(self.error_log))
+                return
+
+            # Criar arquivo de propriedades de conexão adicional (para encrypt/trust)
+            conn_props_file = SCHEMASPY_DIR / "connection.properties"
+            try:
+                with open(conn_props_file, "w", encoding="utf-8") as f:
+                    # Apenas propriedades extras, não a URL
+                    f.write("# Additional connection properties\n")
                 
-                cmd += [
-                    "-u", "ignored", 
-                    "-p", "ignored",
-                    "-connprops", str(conn_props_file)
-                ]
+                log(f"Arquivo de propriedades criado: {conn_props_file}")
+            except Exception as e:
+                msg = f"Erro ao criar arquivo de propriedades: {e}"
+                log(f"ERRO: {msg}")
+                self.error_log.append(msg)
+                self.finished_signal.emit(False, "\n".join(self.error_log))
+                return
+
+            # Comando SchemaSpy usando tipo customizado
+            # Com tipo customizado, não precisamos de -host/-port/-db
+            cmd = [
+                "java",
+                f"-Djava.library.path={str(SCHEMASPY_DIR)}",
+                "-jar", str(SCHEMASPY_JAR),
+                "-t", str(custom_db_type),  # Usar arquivo .properties customizado
+                "-s", schema,
+                "-dp", str(driver_jar),
+                "-o", str(OUTPUT_DIR),
+                "-debug",
+                "-noXml"
+            ]
+            
+
+            # SchemaSpy requer -u e -p
+            if windows_auth:
+                cmd += ["-u", "ignored", "-p", "ignored"]
             else:
-                user = self.config.get("username", "")
-                password = self.config.get("password", "")
                 if not user:
                     msg = "Usuario SQL nao configurado"
                     log(f"ERRO: {msg}")
                     self.error_log.append(msg)
                     self.finished_signal.emit(False, "\n".join(self.error_log))
                     return
-                
-                conn_props_file = SCHEMASPY_DIR / "connection.properties"
-                try:
-                    with open(conn_props_file, "w", encoding="utf-8") as f:
-                        f.write("encrypt=true\n")
-                        f.write("trustServerCertificate=true\n")
-                    log(f"Arquivo de propriedades SSL criado: {conn_props_file}")
-                    cmd += ["-u", user, "-p", password, "-connprops", str(conn_props_file)]
-                except Exception as e:
-                    log(f"Erro ao criar arquivo de propriedades: {e}")
-                    cmd += ["-u", user, "-p", password]
+                cmd += ["-u", user, "-p", password]
 
             log(f"Executando SchemaSpy...")
             log(f"Comando completo:")
@@ -212,7 +291,7 @@ class SchemaSpyThread(QThread):
                     cmd_display.append(arg)
             log(f"{' '.join(cmd_display)}")
 
-            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            proc = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
 
             # Loga stdout e stderr
             if proc.stdout:
@@ -260,7 +339,7 @@ class HomePage(QWidget):
         with open(JSON_FILE, "r", encoding="utf-8") as f:
             self.config = json.load(f)
 
-        self.server = server or self.config.get("server", "localhost")
+        self.server = server or self.config.get("host", self.config.get("server", "localhost"))
         self.database = database or self.config.get("database", "Desconhecido")
 
         log(f"[HomePage] Conectado em {self.server} - {self.database}")
