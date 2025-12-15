@@ -1,0 +1,235 @@
+  ____       _                          ____
+ / ___|  ___| |__   ___ _ __ ___   __ _/ ___| _ __  _   _
+ \___ \ / __| '_ \ / _ \ '_ ` _ \ / _` \___ \| '_ \| | | |
+  ___) | (__| | | |  __/ | | | | | (_| |___) | |_) | |_| |
+ |____/ \___|_| |_|\___|_| |_| |_|\__,_|____/| .__/ \__, |
+                                             |_|    |___/
+
+                                              7.0.2
+
+SchemaSpy generates an HTML representation of a database schema's relationships.
+SchemaSpy comes with ABSOLUTELY NO WARRANTY.
+SchemaSpy is free software and can be redistributed under the conditions of LGPL version 3 or later.
+http://www.gnu.org/licenses/
+
+INFO  - Running SchemaSpy 7.0.2 with Java(Microsoft) 17.0.17 PID 3524 [Windows 10, 10.0, amd64, C:\Users\rafael.silva\PDI\smartview\schemaspy\schemaspy-app.jar] started by rafael.silva in C:\Users\rafael.silva\PDI\smartview\schemaspy
+INFO  - Usage: java -jar "schemaspy-app.jar" [options]
+  Options:
+    ?, -?, /?, -h, -help, --help
+      show general usage and available options
+    -dbHelp, -dbhelp, --dbHelp, --dbhelp
+      Show built-in database types and their required connection parameters
+    -l, --license
+      Print license, it will first print GPL and then LGPL (LGPL is addition to GPL)
+    -gv, --graphviz-dir, schemaspy.gv
+      Path to directory containing graphviz bin folder. /bin/dot will be appended
+    -lq, --low-quality, schemaspy.lq
+      Try to generate low quality diagrams, depending on renderers/Graphviz installation might not be available
+      Default: false
+    -pfp, --prompt-for-password, schemaspy.pfp
+      enter a database password
+    -configFile
+      Path to configFile to be used, default is to look for schemaspy.properties
+    -all, schemaspy.all
+      Try to analyze all schemas in database, schemas can be excluded with '-schemSpec' which as defaults set by 
+      databaseType 
+      Default: false
+    -anomaliesLengthChange, --anomaliesLengthChange, schemaspy.anomaliesLengthChange
+      "Whether users can change the page length for anomalies"
+      Default: false
+    -anomaliesPageLength, --anomaliesPageLength, schemaspy.anomaliesPageLength
+      "The DataTables pageLength for anomalies"
+      Default: 10
+    -asciidoc, --asciidoc, schemaspy.asciidoc
+      "Format descriptions using asciidoc rather than Markdown"
+      Default: false
+    -cat, --catalog, schemaspy.cat, schemaspy.catalog
+      catalog
+    -checkLengthChange, --checkLengthChange, schemaspy.checkLengthChange
+      "Whether users can change the page length for check constraints"
+      Default: false
+    -checkPageLength, --checkPageLength, schemaspy.checkPageLength
+      "The DataTables pageLength for check constraints"
+      Default: 10
+    -X, --column-exclusions, schemaspy.X, schemaspy.columnExclusions, schemaspy.column-exclusions
+      exclude column(s), regular expression to exclude column(s) from diagrams, defaults to nothing.
+      Default: [^.]
+    -columnLengthChange, --columnLengthChange, schemaspy.columnLengthChange
+      "Whether users can change the page length for routines"
+      Default: false
+    -columnPageLength, --columnPageLength, schemaspy.columnPageLength
+      "The DataTables pageLength for routines"
+      Default: 50
+    -connprops, schemaspy.connprops
+      Either a properties-file with additional properties or a key/value list, pairs separated by ';' and key and value 
+      separated by '=' (*nix) '\=' (win, git bash)
+    -css, schemaspy.css
+      Use a custom stylesheet. Bundled stylesheet can be extracted from jar(using zip capable tool), path 
+      ?/layout/schemaSpy.css? 
+      Default: schemaSpy.css
+    -db, --database-name, schemaspy.db, schemaspy.database-name
+      Name of database to connect to
+    -t, --database-type, schemaspy.t, schemaspy.database-type
+      type of database
+      Default: ora
+    -dbThreads, -dbthreads, --db-threads, schemaspy.dbthreads, schemaspy.dbThreads, schemaspy.db-threads
+      Specify how many threads/connections should be used when reading data from database, defaults to 15 or as 
+      specified by databaseType
+      Default: 0
+    -dbObjectLengthChange, --dbObjectLengthChange, schemaspy.dbObjectLengthChange
+      "Whether users can change the page length for database objects"
+      Default: false
+    -dbObjectPageLength, --dbObjectPageLength, schemaspy.dbObjectPageLength
+      "The DataTables pageLength for database objects"
+      Default: 50
+    -debug, --debug, schemaspy.debug
+      Enable debug logging
+      Default: false
+    -degree, schemaspy.degree
+      Limit the degree of separation, allowed values 1 or 2, defaults to 2
+      Default: 2
+    -desc, --description, schemaspy.desc, schemaspy.description
+      Description used in html report
+    -dp, --driverPath, schemaspy.dp, schemaspy.driverPath
+      path to look for JDBC drivers overrides driverPath in [databaseType].properties, supports directory, will add 
+      directory and recurse to add all content. Supports multiple paths using os dependent pathSeparator.
+      Default: []
+    -fkLengthChange, --fkLengthChange, schemaspy.fkLengthChange
+      "Whether users can change the page length for foreign keys"
+      Default: false
+    -fkPageLength, --fkPageLength, schemaspy.fkPageLength
+      "The DataTables pageLength for foreign keys"
+      Default: 50
+    -font, schemaspy.font
+      font to use, must exist on the system
+      Default: Helvetica
+    -fontsize, --font-size, schemspy.fontsize, schemaspy.font-size
+      size of font
+      Default: 11
+    -host, --host, schemaspy.host
+      Hostname/ip to connect to, if required by databaseType.
+    -imageformat, --image-format, schemaspy.imageformat
+      The format of the image that gets generated. Supported formats are svg and png. Defaults to png. Example 
+      '-imageformat svg'
+      Default: png
+    --include-routine-definition, schemaspy.includeRoutineDefinition
+      Include routine definition in output
+      Default: false
+    -indexLengthChange, --indexLengthChange, schemaspy.indexLengthChange
+      "Whether users can change the page length for indexes"
+      Default: false
+    -indexPageLength, --indexPageLength, schemaspy.indexPageLength
+      "The DataTables pageLength for indexes"
+      Default: 10
+    -x, --indirect-column-exclusions, schemaspy.x, schemaspy.indirectColumnExclusions, schemaspy.indirect-column-exclusions
+      exclude column(s) from diagrams where column(s) aren't directly referenced by focal table, defaults to nothing.
+      Default: [^.]
+    -maxdet, --max-details, schemaspy.maxdet, schemaspy.max-details
+      Maximum number of nodes(tables/views) before removing details in diagrams
+      Default: 300
+    -meta, --schema-meta, schemaspy.meta
+      Single schema analysis file path to SchemaMeta-xml, when running '-all' or '-schemas' path to directory 
+      containing SchemaMeta-xmls with pattern (DatabaseName|Schema).meta.xml
+    -noexportedkeys, --no-exported-keys, schemaspy.noexportedkeys, schemaspy.no-exported-keys
+      don't look for exported keys (if the column is a FK in another table)
+      Default: false
+    --no-orphans, schemaspy.no-orphans
+      Don't include orphan tables in the relationships graph
+      Default: false
+    -nopages, --no-pages, schemaspy.nopages, schemaspy.no-pages
+      Don't use pagination in data tables
+      Default: false
+    -norows, --no-rows, schemaspy.norows, schemaspy.no-rows
+      Don't query or displat number of rows for tables
+      Default: false
+    -noviews, --no-views, schemaspy.noviews, schemaspy.no-views
+      skip processing of views.
+      Default: false
+    -noAnomaliesPaging, --noAnomaliesPaging, schemaspy.noAnomaliesPaging
+      "Whether DataTables for anomalies should have pagination"
+      Default: false
+    -noCheckPaging, --noCheckPaging, schemaspy.noCheckPaging
+      "Whether DataTables for check constraints should have pagination"
+      Default: false
+    -noColumnPaging, --noColumnPaging, schemaspy.noColumnPaging
+      "Whether DataTables for routines should have pagination"
+      Default: false
+    -noDbObjectPaging, --noDbObjectPaging, schemaspy.noDbObjectPaging
+      "Whether DataTables for database objects should have pagination"
+      Default: false
+    -noFkPaging, --noFkPaging, schemaspy.noFkPaging
+      "Whether DataTables for foreign keys should have pagination"
+      Default: false
+    -noIndexPaging, --noIndexPaging, schemaspy.noIndexPaging
+      "Whether DataTables for indexes should have pagination"
+      Default: false
+    -noRoutinePaging, --noRoutinePaging, schemaspy.noRoutinePaging
+      "Whether DataTables for routines should have pagination"
+      Default: false
+    -noTablePaging, --noTablePaging, schemaspy.noTablePaging
+      "Whether DataTables for database tables should have pagination"
+      Default: false
+    -nohtml, --no-html, schemaspy.nohtml
+      Skip html generation
+      Default: false
+    -noimplied, --no-implied, schemaspy.noimplied
+      Don't look for implied relationships
+      Default: false
+    -o, --outputDirectory, schemaspy.o, schemaspy.outputDirectory
+      directory to place the generated output in
+    -p, --password, schemaspy.p, schemaspy.pw, schemaspy.password
+      password of the database user (defaults to no password)
+    -port, --port, schemaspy.port
+      Port that dbms listens to, if required by databaseType.
+    -rails, schemaspy.rails
+      Use Rails-based naming convention to find relationships between logical foreign keys and primary keys.
+      Default: false
+    -rankdirbug, schemaspy.rankdirbug
+      Switch diagram direction from 'top to bottom' to 'right to left'
+      Default: false
+    -renderer, --renderer, schemaspy.renderer
+      Specify which renderer to use should be prefixed with ':'. Example '-renderer :cairo'
+    -routineLengthChange, --routineLengthChange, schemaspy.routineLengthChange
+      "Whether users can change the page length for routines"
+      Default: false
+    -routinePageLength, --routinePageLength, schemaspy.routinePageLength
+      "The DataTables pageLength for routines"
+      Default: 50
+    -s, --schema, schemaspy.s, schemaspy.schema
+      name of the schema to analyze (defaults to the specified user)
+    -schemaSpec, --schema-spec, schemaspy.schemaSpec, schemaspy.schema-spec
+      Schemas to analyze, default to all, might be specified by databaseType
+    -schemas, -schemata, schemaspy.schemas, schemaspy.schemata
+      List of schemas to analyze, separated by space or ','
+      Default: []
+    -sso, --single-sign-on, schemaspy.sso, schemaspy.single-sign-on
+      Remove requirement for user
+      Default: false
+    -I, --table-exclusions, schemaspy.I, schemaspy.tableExclusions, schemaspy.table-exclusions
+      Exclude table(s) from analysis, defaults to exclude tables containing $, can be overridden with -I ""
+      Default: .*\$.*
+    -i, --table-inclusions, schemaspy.i, schemaspy.tableInclusions, schemaspy.table-inclusions
+      Include table(s) in analysis, defaults to match everything
+      Default: .*
+    -tableLengthChange, --tableLengthChange, schemaspy.tableLengthChange
+      "Whether users can change the page length for database tables"
+      Default: false
+    -tablePageLength, --tablePageLength, schemaspy.tablePageLength
+      "The DataTables pageLength for database tables"
+      Default: 10
+    -template, schemaspy.template
+      Folder containing templates for html report
+      Default: layout
+    -u, --user, schemaspy.u, schemaspy.user
+      connect to the database with this user id
+    -vizjs, schemaspy.vizjs
+      Use viz.js instead of graphviz graphvizDot executable
+      Default: false
+
+Go to http://schemaspy.org for a complete list/description of additional parameters.
+
+Sample usage using the default database type (implied -t ora):
+
+ java -jar schemaSpy.jar -db mydb -s myschema -u devuser -p password -o output
+
+

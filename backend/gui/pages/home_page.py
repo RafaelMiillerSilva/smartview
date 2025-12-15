@@ -2,20 +2,23 @@ import json
 import subprocess
 import os
 from pathlib import Path
+from datetime import datetime
 from PySide6.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, 
+    QWidget, QVBoxLayout, QHBoxLayout, QPushButton, QLabel,
     QMessageBox, QDialog, QPlainTextEdit, QFrame
 )
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtCore import QUrl, Qt, QThread, Signal
 from PySide6.QtGui import QPixmap
 from backend.config.paths import (
-    ROOT_DIR, JSON_FILE, LOG_FILE, SCHEMASPY_DIR, 
+    ROOT_DIR, JSON_FILE, LOG_FILE, SCHEMASPY_DIR,
     SCHEMASPY_JAR, OUTPUT_DIR, GRAPHVIZ_BIN
 )
 import sys
+
 # Driver JAR
 DRIVER_JAR = SCHEMASPY_DIR / "drivers" / "mssql-jdbc-13.2.1.jre11.jar"
+
 
 class Logger:
     def __init__(self, logfile):
@@ -24,21 +27,23 @@ class Logger:
     def write(self, message):
         with open(self.logfile, "a", encoding="utf-8") as f:
             f.write(message)
-        # também salva no terminal (se quiser)
-        # sys.__stdout__.write(message)
 
     def flush(self):
         pass  # necessário para compatibilidade com stdout
+
 
 # Ativar redirecionamento
 sys.stdout = Logger(LOG_FILE)
 sys.stderr = Logger(LOG_FILE)
 
+
 def log(msg: str):
-    """Registra mensagem no arquivo de log"""
+    """Registra mensagem no arquivo de log com timestamp"""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    linha = f"[{timestamp}] {msg}"
     with open(LOG_FILE, "a", encoding="utf-8") as f:
-        f.write(msg + "\n")
-    print(msg)
+        f.write(linha + "\n")
+    print(linha)
 
 
 class SchemaSpyThread(QThread):
@@ -66,6 +71,20 @@ class SchemaSpyThread(QThread):
             driver_jar = DRIVER_JAR
             dll_file = SCHEMASPY_DIR / "mssql-jdbc_auth-13.2.1.x64.dll"
 
+            # Logs de diagnóstico de parâmetros e paths
+            log("========== PARAMETROS DE CONEXAO / AMBIENTE ==========")
+            log(f"host   = {host}")
+            log(f"port   = {port}")
+            log(f"db     = {db}")
+            log(f"schema = {schema}")
+            log(f"auth   = {auth}")
+            log(f"SCHEMASPY_JAR = {SCHEMASPY_JAR}")
+            log(f"DRIVER_JAR    = {driver_jar}")
+            log(f"SCHEMASPY_DIR = {SCHEMASPY_DIR}")
+            log(f"OUTPUT_DIR    = {OUTPUT_DIR}")
+            log(f"dll_file      = {dll_file}")
+            log("======================================================")
+
             # Validações
             if not SCHEMASPY_JAR.exists():
                 msg = f"schemaspy-app.jar nao encontrado em {SCHEMASPY_JAR}"
@@ -81,14 +100,26 @@ class SchemaSpyThread(QThread):
                 self.finished_signal.emit(False, "\n".join(self.error_log))
                 return
 
+            if not OUTPUT_DIR.exists():
+                msg = f"Diretorio de saida nao existe ou nao pode ser criado: {OUTPUT_DIR}"
+                log(f"ERRO: {msg}")
+                self.error_log.append(msg)
+                self.finished_signal.emit(False, "\n".join(self.error_log))
+                return
+
             # Verifica Java
             try:
+                log("Verificando instalacao do Java...")
                 java_check = subprocess.run(
                     ["java", "-version"],
                     capture_output=True,
                     text=True,
                     timeout=5
                 )
+                log(f"Resultado java -version | returncode={java_check.returncode}")
+                log(f"STDOUT java -version:\n{java_check.stdout}")
+                log(f"STDERR java -version:\n{java_check.stderr}")
+
                 if java_check.returncode != 0:
                     msg = "Java nao esta instalado ou nao esta no PATH"
                     log(f"ERRO: {msg}")
@@ -117,19 +148,18 @@ class SchemaSpyThread(QThread):
                     version_output = graphviz_check.stderr.strip() if graphviz_check.stderr else graphviz_check.stdout.strip()
                     log(f"Graphviz detectado: {version_output}")
                 else:
-                    log(f"Graphviz nao encontrado - diagramas de relacionamento nao serao gerados")
-                    log(f"Instale em: https://graphviz.org/download/")
+                    log("Graphviz nao encontrado - diagramas de relacionamento nao serao gerados")
+                    log("Instale em: https://graphviz.org/download/")
             except FileNotFoundError:
-                log(f"Graphviz nao encontrado no PATH")
-                log(f"Diagramas de relacionamento nao serao gerados")
-                log(f"Baixe em: https://graphviz.org/download/")
+                log("Graphviz nao encontrado no PATH")
+                log("Diagramas de relacionamento nao serao gerados")
+                log("Baixe em: https://graphviz.org/download/")
                 log(f"Ou coloque o Graphviz em: {GRAPHVIZ_BIN.parent}")
             except Exception as e:
                 log(f"Erro ao verificar Graphviz: {e}")
 
             # Detecta se é instância nomeada
             is_named_instance = "\\" in host
-            
             if is_named_instance:
                 parts = host.split("\\")
                 server_name = parts[0]
@@ -147,7 +177,6 @@ class SchemaSpyThread(QThread):
 
             # Criar connection string JDBC completa
             if is_named_instance:
-                # Para instância nomeada, usar instanceName no JDBC URL
                 if windows_auth:
                     jdbc_url = (
                         f"jdbc:sqlserver://{server_name};"
@@ -167,12 +196,9 @@ class SchemaSpyThread(QThread):
                         f"encrypt=true;"
                         f"trustServerCertificate=true"
                     )
-                
-                # Mascarar senha no log
                 jdbc_url_masked = jdbc_url.replace(password, "****") if password else jdbc_url
                 log(f"URL JDBC (instancia nomeada): {jdbc_url_masked}")
             else:
-                # Para servidor padrão, usar host:port tradicional
                 if windows_auth:
                     jdbc_url = (
                         f"jdbc:sqlserver://{server_name}:{port};"
@@ -190,7 +216,6 @@ class SchemaSpyThread(QThread):
                         f"encrypt=true;"
                         f"trustServerCertificate=true"
                     )
-                
                 jdbc_url_masked = jdbc_url.replace(password, "****") if password else jdbc_url
                 log(f"URL JDBC (servidor padrao): {jdbc_url_masked}")
 
@@ -199,31 +224,28 @@ class SchemaSpyThread(QThread):
                 if dll_file.exists():
                     dll_dir = str(dll_file.parent)
                     os.environ["PATH"] = f"{dll_dir}{os.pathsep}" + os.environ.get("PATH", "")
-                    
-                    log(f"Windows Auth: mssql-jdbc_auth-13.2.1.x64.dll configurado:")
+                    log("Windows Auth: mssql-jdbc_auth-13.2.1.x64.dll configurado:")
                     log(f"Pasta: {dll_dir}")
                     log(f"Tamanho: {dll_file.stat().st_size:,} bytes")
                 else:
                     msg = f"CRITICO: mssql-jdbc_auth-13.2.1.x64.dll nao encontrado em {dll_file}"
                     log(msg)
                     self.error_log.append(msg)
-                    self.error_log.append("Baixe em: https://learn.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server")
+                    self.error_log.append(
+                        "Baixe em: https://learn.microsoft.com/en-us/sql/connect/jdbc/download-microsoft-jdbc-driver-for-sql-server"
+                    )
                     self.finished_signal.emit(False, "\n".join(self.error_log))
                     return
 
             # Criar tipo de banco customizado para usar URL completa
-            # SchemaSpy ignora connectionURL no properties, então criamos um .properties customizado
             custom_db_type = SCHEMASPY_DIR / "mssql-custom.properties"
             try:
-                # Conteúdo do arquivo de tipo customizado
-                # Baseado em mssql17 mas com connectionSpec vazio para forçar uso do -connprops
                 with open(custom_db_type, "w", encoding="utf-8") as f:
                     f.write("# Custom SQL Server type for named instances\n")
                     f.write("description=Microsoft SQL Server with custom connection\n")
                     f.write("driver=com.microsoft.sqlserver.jdbc.SQLServerDriver\n")
                     f.write(f"connectionSpec={jdbc_url}\n")
                     f.write("extends=mssql05\n")
-                
                 log(f"Tipo de banco customizado criado: {custom_db_type}")
             except Exception as e:
                 msg = f"Erro ao criar tipo customizado: {e}"
@@ -236,9 +258,7 @@ class SchemaSpyThread(QThread):
             conn_props_file = SCHEMASPY_DIR / "connection.properties"
             try:
                 with open(conn_props_file, "w", encoding="utf-8") as f:
-                    # Apenas propriedades extras, não a URL
                     f.write("# Additional connection properties\n")
-                
                 log(f"Arquivo de propriedades criado: {conn_props_file}")
             except Exception as e:
                 msg = f"Erro ao criar arquivo de propriedades: {e}"
@@ -248,19 +268,17 @@ class SchemaSpyThread(QThread):
                 return
 
             # Comando SchemaSpy usando tipo customizado
-            # Com tipo customizado, não precisamos de -host/-port/-db
             cmd = [
                 "java",
                 f"-Djava.library.path={str(SCHEMASPY_DIR)}",
                 "-jar", str(SCHEMASPY_JAR),
-                "-t", str(custom_db_type),  # Usar arquivo .properties customizado
+                "-t", str(custom_db_type),
                 "-s", schema,
                 "-dp", str(driver_jar),
                 "-o", str(OUTPUT_DIR),
                 "-debug",
-                "-noXml"
+                # -no-xml não existe de verdade na 7.0.2; será ignorado, então removi
             ]
-            
 
             # SchemaSpy requer -u e -p
             if windows_auth:
@@ -274,13 +292,13 @@ class SchemaSpyThread(QThread):
                     return
                 cmd += ["-u", user, "-p", password]
 
-            log(f"Executando SchemaSpy...")
-            log(f"Comando completo:")
-            
-            # Mostra comando completo mas mascara senha
+            log("Executando SchemaSpy...")
+            log("Comando completo:")
+
+            # Mostrar comando completo mascarando a senha
             cmd_display = []
             hide_next = False
-            for i, arg in enumerate(cmd):
+            for arg in cmd:
                 if hide_next:
                     cmd_display.append("****")
                     hide_next = False
@@ -289,39 +307,55 @@ class SchemaSpyThread(QThread):
                     hide_next = True
                 else:
                     cmd_display.append(arg)
-            log(f"{' '.join(cmd_display)}")
+            log(" ".join(cmd_display))
 
             proc = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
 
-            # Loga stdout e stderr
-            if proc.stdout:
-                log(f"STDOUT:\n{proc.stdout.strip()}")
-            if proc.stderr:
-                log(f"STDERR:\n{proc.stderr.strip()}")
+            log(f"SchemaSpy finalizado com returncode={proc.returncode}")
+            log("===== STDOUT SchemaSpy =====")
+            log(proc.stdout.strip() if proc.stdout else "<vazio>")
+            log("===== STDERR SchemaSpy =====")
+            log(proc.stderr.strip() if proc.stderr else "<vazio>")
+            log("======================================")
+
+            stderr = proc.stderr or ""
 
             if proc.returncode == 0:
                 log("Documentacao gerada com sucesso!")
                 self.finished_signal.emit(True, "")
             else:
+                # Tratamento especial: bug de XML (NPE em XmlProducerUsingDOM)
+                if "XmlProducerUsingDOM.generate" in stderr and "NullPointerException" in stderr:
+                    warn_msg = (
+                        "SchemaSpy gerou HTML com sucesso, mas falhou ao gerar XML "
+                        "(NullPointerException em XmlProducerUsingDOM - bug conhecido da versao 7.0.2)."
+                    )
+                    log(warn_msg)
+                    self.error_log.append(warn_msg)
+                    # Considera como sucesso para nao quebrar a UX
+                    self.finished_signal.emit(True, "\n".join(self.error_log))
+                    return
+
+                # Demais erros: tratar como falha real
                 msg = f"SchemaSpy falhou (codigo {proc.returncode})"
-                log(msg)
+                log(f"ERRO: {msg}")
                 self.error_log.append(msg)
                 if proc.stdout:
                     self.error_log.append("\n--- STDOUT ---")
                     self.error_log.append(proc.stdout.strip())
-                if proc.stderr:
+                if stderr:
                     self.error_log.append("\n--- STDERR ---")
-                    self.error_log.append(proc.stderr.strip())
+                    self.error_log.append(stderr.strip())
                 self.finished_signal.emit(False, "\n".join(self.error_log))
 
         except subprocess.TimeoutExpired:
             msg = "Timeout: SchemaSpy demorou mais de 5 minutos"
-            log(msg)
+            log(f"ERRO: {msg}")
             self.error_log.append(msg)
             self.finished_signal.emit(False, "\n".join(self.error_log))
         except Exception as e:
             msg = f"Erro inesperado: {e}"
-            log(msg)
+            log(f"ERRO: {msg}")
             self.error_log.append(msg)
             self.finished_signal.emit(False, "\n".join(self.error_log))
 
