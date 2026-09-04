@@ -1,0 +1,30 @@
+DOT RETURNCODE: 0
+DOT STDOUT: 
+DOT STDERR: Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node LogEstoque
+Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node Clientes
+Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node PedidoItens
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node Produtos
+Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node Enderecos
+Warning: cell size too small for content
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node Pedidos
+Warning: cell size too small for content
+Warning: cell size too small for content
+in label of node Auditoria
+

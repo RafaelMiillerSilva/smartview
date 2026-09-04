@@ -3,10 +3,13 @@ from pathlib import Path
 from PySide6.QtWidgets import QApplication
 
 
-# === Define o diretório raiz ===
-ROOT_DIR = Path(__file__).resolve().parent
-if str(ROOT_DIR) not in sys.path:
-    sys.path.insert(0, str(ROOT_DIR))
+# === Define os diretórios no sys.path ===
+ROOT_DIR = Path(__file__).resolve().parent.parent
+BACKEND_DIR = ROOT_DIR / "backend"
+
+for path in [ROOT_DIR, BACKEND_DIR]:
+    if str(path) not in sys.path:
+        sys.path.insert(0, str(path))
 
 from backend.gui.main_window import MainWindow
 

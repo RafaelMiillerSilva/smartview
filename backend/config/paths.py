@@ -7,8 +7,8 @@ ROOT_DIR = Path(__file__).resolve().parents[2]  # sobe até a raiz do projeto (s
 # === Pastas principais ===
 BACKEND_DIR = ROOT_DIR / "backend"
 CONFIG_DIR = BACKEND_DIR / "config"
-UTILS_DIR = BACKEND_DIR / "utils"
-GUI_DIR = ROOT_DIR / "gui"  
+UTILS_DIR = ROOT_DIR / "utils"
+GUI_DIR = BACKEND_DIR / "gui"  
 SCHEMASPY_DIR = ROOT_DIR / "schemaspy"
 
 # === Graphviz ===
@@ -19,6 +19,13 @@ GRAPHVIZ_BIN = GRAPHVIZ_DIR / "bin"
 if GRAPHVIZ_BIN.exists():
     os.environ["PATH"] = f"{GRAPHVIZ_BIN}{os.pathsep}" + os.environ.get("PATH", "")
     print(f" Graphviz adicionado ao PATH: {GRAPHVIZ_BIN}")
+    dot_exe = GRAPHVIZ_BIN / "dot.exe"
+    if dot_exe.exists():
+        try:
+            import subprocess
+            subprocess.run([str(dot_exe), "-c"], capture_output=True, timeout=5)
+        except Exception:
+            pass
 else:
     print(f" Graphviz não encontrado em: {GRAPHVIZ_BIN}")
     print(f"   Os diagramas de relacionamento não serão gerados.")
@@ -26,7 +33,17 @@ else:
 
 # === Arquivos principais ===
 JSON_FILE = ROOT_DIR / "connection.json"
-LOG_FILE = ROOT_DIR / "connection.log"
+LOG_FILE = ROOT_DIR / "connection_log.txt"
+
+old_log = ROOT_DIR / "connection.log"
+if old_log.exists():
+    try:
+        with open(old_log, "r", encoding="utf-8", errors="ignore") as f_in:
+            lines = f_in.readlines()
+        with open(LOG_FILE, "w", encoding="utf-8") as f_out:
+            f_out.writelines(lines[-500:])
+    except Exception:
+        pass
 
 # === SchemaSpy ===
 SCHEMASPY_JAR = SCHEMASPY_DIR / "schemaspy-app.jar"

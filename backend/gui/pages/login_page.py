@@ -229,13 +229,19 @@ class LoginPage(QWidget):
         # -------------------
         last_conn = load_connection_json()
         if last_conn:
-            self.input_server.setText(last_conn.get("server", ""))
-            self.checkbox_windows_auth.setChecked(last_conn.get("windows_auth", True))
-            if not last_conn.get("windows_auth", True):
-                self.input_user.setText(last_conn.get("username", ""))
-                self.input_password.setText(last_conn.get("password", ""))
-            if "database" in last_conn and last_conn["database"]:
-                self.combo_database.addItem(last_conn["database"])
+            saved_server = last_conn.get("host") or last_conn.get("server") or ""
+            self.input_server.setText(saved_server)
+            
+            is_win = (last_conn.get("auth") == "windows") if "auth" in last_conn else last_conn.get("windows_auth", True)
+            self.checkbox_windows_auth.setChecked(is_win)
+            
+            if not is_win:
+                self.input_user.setText(last_conn.get("user") or last_conn.get("username") or "")
+                self.input_password.setText(last_conn.get("password") or "")
+                
+            saved_db = last_conn.get("database", "")
+            if saved_server and saved_db:
+                self.combo_database.addItem(saved_db)
                 self.combo_database.setEnabled(True)
                 self.button_continue.setEnabled(True)
 
@@ -307,6 +313,19 @@ class LoginPage(QWidget):
     # -------------------
     def try_connect_server(self):
         server = self.input_server.text().strip()
+        if not server:
+            self.label_error.setText("Por favor, informe o nome do Servidor.")
+            self.label_error.setStyleSheet("""
+                font-size: 13px;
+                font-weight: 600;
+                padding: 10px;
+                border-radius: 0px;
+                background-color: #f8d7da;
+                color: #721c24;
+                font-family: 'Typold', 'Inter', 'Segoe UI', sans-serif;
+            """)
+            return
+
         user = self.input_user.text().strip()
         password = self.input_password.text().strip()
         windows_auth = self.checkbox_windows_auth.isChecked()
@@ -352,6 +371,13 @@ class LoginPage(QWidget):
     def try_connect_database(self):
         server = self.input_server.text().strip()
         database = self.combo_database.currentText().strip()
+        if not server:
+            self.label_error.setText("Por favor, informe o nome do Servidor.")
+            return
+        if not database:
+            self.label_error.setText("Por favor, selecione um Banco de Dados.")
+            return
+
         windows_auth = self.checkbox_windows_auth.isChecked()
 
         user = self.input_user.text().strip() if not windows_auth else ""

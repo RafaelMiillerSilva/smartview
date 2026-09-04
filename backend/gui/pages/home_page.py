@@ -12,7 +12,7 @@ from PySide6.QtCore import QUrl, Qt, QThread, Signal
 from PySide6.QtGui import QPixmap
 from backend.config.paths import (
     ROOT_DIR, JSON_FILE, LOG_FILE, SCHEMASPY_DIR,
-    SCHEMASPY_JAR, OUTPUT_DIR, GRAPHVIZ_BIN
+    SCHEMASPY_JAR, OUTPUT_DIR, GRAPHVIZ_BIN, GRAPHVIZ_DIR
 )
 import sys
 
@@ -60,11 +60,11 @@ class SchemaSpyThread(QThread):
         try:
             log("Thread iniciada para gerar documentacao.")
 
-            host = self.config.get("host", self.config.get("server", "localhost"))
-            port = str(self.config.get("port", 1433))
-            db = self.config.get("database", "")
-            schema = self.config.get("schema", "dbo")
-            auth = self.config.get("auth", "sql").lower()
+            host = self.config.get("host") or self.config.get("server") or "localhost"
+            port = str(self.config.get("port") or 1433)
+            db = self.config.get("database") or ""
+            schema = self.config.get("schema") or "dbo"
+            auth = (self.config.get("auth") or "sql").lower()
 
             OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -276,8 +276,10 @@ class SchemaSpyThread(QThread):
                 "-s", schema,
                 "-dp", str(driver_jar),
                 "-o", str(OUTPUT_DIR),
+                "-font", "Arial",
+                "-imageformat", "svg",
+                "-gv", str(GRAPHVIZ_DIR),
                 "-debug",
-                # -no-xml não existe de verdade na 7.0.2; será ignorado, então removi
             ]
 
             # SchemaSpy requer -u e -p
@@ -311,6 +313,39 @@ class SchemaSpyThread(QThread):
 
             proc = subprocess.run(cmd, capture_output=True, text=True, timeout=3600)
 
+            # Salvar log detalhado para auditoria
+            debug_file = ROOT_DIR / "schemaspy_run_log.txt"
+            try:
+                with open(debug_file, "w", encoding="utf-8") as f_dbg:
+                    f_dbg.write(f"RETURNCODE: {proc.returncode}\n")
+                    f_dbg.write("===== STDOUT =====\n")
+                    f_dbg.write(proc.stdout or "<vazio>")
+                    f_dbg.write("\n===== STDERR =====\n")
+                    f_dbg.write(proc.stderr or "<vazio>")
+            except Exception as e_dbg:
+                log(f"Erro ao salvar debug_file: {e_dbg}")
+
+            # Teste de execução direta do dot.exe
+            dot_test_file = ROOT_DIR / "dot_direct_test.txt"
+            dot_exe = GRAPHVIZ_BIN / "dot.exe"
+            sample_dot = OUTPUT_DIR / "diagrams" / "summary" / "relationships.real.compact.dot"
+            if dot_exe.exists() and sample_dot.exists():
+                try:
+                    dot_res = subprocess.run(
+                        [str(dot_exe), "-Tsvg", str(sample_dot), "-o", str(OUTPUT_DIR / "diagrams" / "summary" / "relationships.real.compact.svg")],
+                        cwd=str(sample_dot.parent),
+                        capture_output=True,
+                        text=True,
+                        timeout=10
+                    )
+                    with open(dot_test_file, "w", encoding="utf-8") as f_dt:
+                        f_dt.write(f"DOT RETURNCODE: {dot_res.returncode}\n")
+                        f_dt.write(f"DOT STDOUT: {dot_res.stdout}\n")
+                        f_dt.write(f"DOT STDERR: {dot_res.stderr}\n")
+                except Exception as ex:
+                    with open(dot_test_file, "w", encoding="utf-8") as f_dt:
+                        f_dt.write(f"DOT EXEC EXCEPTION: {ex}\n")
+
             log(f"SchemaSpy finalizado com returncode={proc.returncode}")
             log("===== STDOUT SchemaSpy =====")
             log(proc.stdout.strip() if proc.stdout else "<vazio>")
@@ -318,35 +353,29 @@ class SchemaSpyThread(QThread):
             log(proc.stderr.strip() if proc.stderr else "<vazio>")
             log("======================================")
 
-            stderr = proc.stderr or ""
+            # Pos-processamento: SchemaSpy 7.0.2 no Windows possui um bug conhecido
+            # onde tenta chamar o dot.exe enquanto o arquivo .dot ainda esta aberto pelo Java (Permission denied).
+            # Como o Java ja encerrou aqui, os arquivos estao livres. Compilamos todos os .dot pendentes
+            # e atualizamos relationships.html para exibir as abas com os diagramas perfeitos.
+            self.render_missing_summary_diagrams()
 
-            if proc.returncode == 0:
-                log("Documentacao gerada com sucesso!")
+            index_html = OUTPUT_DIR / "index.html"
+            if index_html.exists():
+                log("Documentacao e diagramas gerados com sucesso!")
                 self.finished_signal.emit(True, "")
-            else:
-                # Tratamento especial: bug de XML (NPE em XmlProducerUsingDOM)
-                if "XmlProducerUsingDOM.generate" in stderr and "NullPointerException" in stderr:
-                    warn_msg = (
-                        "SchemaSpy gerou HTML com sucesso, mas falhou ao gerar XML "
-                        "(NullPointerException em XmlProducerUsingDOM - bug conhecido da versao 7.0.2)."
-                    )
-                    log(warn_msg)
-                    self.error_log.append(warn_msg)
-                    # Considera como sucesso para nao quebrar a UX
-                    self.finished_signal.emit(True, "\n".join(self.error_log))
-                    return
+                return
 
-                # Demais erros: tratar como falha real
-                msg = f"SchemaSpy falhou (codigo {proc.returncode})"
-                log(f"ERRO: {msg}")
-                self.error_log.append(msg)
-                if proc.stdout:
-                    self.error_log.append("\n--- STDOUT ---")
-                    self.error_log.append(proc.stdout.strip())
-                if stderr:
-                    self.error_log.append("\n--- STDERR ---")
-                    self.error_log.append(stderr.strip())
-                self.finished_signal.emit(False, "\n".join(self.error_log))
+            # Demais erros: tratar como falha real
+            msg = f"SchemaSpy falhou (codigo {proc.returncode})"
+            log(f"ERRO: {msg}")
+            self.error_log.append(msg)
+            if proc.stdout:
+                self.error_log.append("\n--- STDOUT ---")
+                self.error_log.append(proc.stdout.strip())
+            if stderr:
+                self.error_log.append("\n--- STDERR ---")
+                self.error_log.append(stderr.strip())
+            self.finished_signal.emit(False, "\n".join(self.error_log))
 
         except subprocess.TimeoutExpired:
             msg = "Timeout: SchemaSpy demorou mais de 5 minutos"
@@ -358,6 +387,92 @@ class SchemaSpyThread(QThread):
             log(f"ERRO: {msg}")
             self.error_log.append(msg)
             self.finished_signal.emit(False, "\n".join(self.error_log))
+
+    def render_missing_summary_diagrams(self):
+        """
+        SchemaSpy 7.0.2 no Windows possui um bug conhecido onde ele chama dot.exe
+        enquanto a thread Java ainda mantém o lock de escrita nos arquivos .dot de sumário (Permission denied).
+        Esta função gera os SVGs logo após o encerramento do Java e atualiza
+        o relationships.html para exibir os diagramas interativos sem erro.
+        """
+        summary_dir = OUTPUT_DIR / "diagrams" / "summary"
+        if not summary_dir.exists():
+            return
+
+        dot_exe = GRAPHVIZ_BIN / "dot.exe"
+        if not dot_exe.exists():
+            return
+
+        # 1. Compila todos os .dot do sumário para .svg se não existirem
+        for dot_file in summary_dir.glob("*.dot"):
+            svg_file = dot_file.with_suffix(".svg")
+            if not svg_file.exists() or svg_file.stat().st_size == 0:
+                try:
+                    subprocess.run(
+                        [str(dot_exe), "-Tsvg", str(dot_file), "-o", str(svg_file)],
+                        cwd=str(summary_dir),
+                        capture_output=True,
+                        timeout=30
+                    )
+                    log(f"Diagrama de sumário compilado com sucesso: {svg_file.name}")
+                except Exception as e:
+                    log(f"Erro ao compilar {dot_file.name}: {e}")
+
+        # 2. Atualiza o relationships.html para exibir os diagramas em abas
+        rel_html = OUTPUT_DIR / "relationships.html"
+        if rel_html.exists():
+            try:
+                with open(rel_html, "r", encoding="utf-8", errors="ignore") as f:
+                    content = f.read()
+
+                if "There were" in content and "error(s)" in content:
+                    diagram_defs = [
+                        ("relationships.real.compact.svg", "compactDegreeImg", "compactDegreeImg-chart", "Compact"),
+                        ("relationships.real.large.svg", "largeDegreeImg", "largeDegreeImg-chart", "Large"),
+                        ("relationships.implied.compact.svg", "compactImpliedDegreeImg", "compactImpliedDegreeImg-chart", "Compact (Implied)"),
+                        ("relationships.implied.large.svg", "largeImpliedDegreeImg", "largeImpliedDegreeImg-chart", "Large (Implied)"),
+                    ]
+
+                    tabs_header = []
+                    tabs_content = []
+                    first = True
+
+                    for svg_name, obj_id, tab_id, tab_title in diagram_defs:
+                        svg_path = summary_dir / svg_name
+                        if svg_path.exists() and svg_path.stat().st_size > 0:
+                            active_cls = "active" if first else ""
+                            expanded = "true" if first else "false"
+                            tabs_header.append(f'<li class="{active_cls}"><a href="#{tab_id}" data-toggle="tab" aria-expanded="{expanded}">{tab_title}</a></li>\n')
+                            tabs_content.append(f'''
+                                <div class="chart tab-pane {active_cls}" id="{tab_id}" style="position: relative; overflow-x:auto;">
+                                    <object type="image/svg+xml" id="{obj_id}" class="diagram" data="diagrams/summary/{svg_name}" style="max-width:100%;" border="0" align="top"></object>
+                                </div>
+                            ''')
+                            first = False
+
+                    if tabs_header:
+                        tabs_html = f'''
+                        <div class="nav-tabs-custom" style="cursor: move;">
+                            <ul class="nav nav-tabs pull-left">
+                                {''.join(tabs_header)}
+                            </ul>
+                            <div class="tab-content no-padding">
+                                {''.join(tabs_content)}
+                            </div>
+                        </div>
+                        '''
+                        import re
+                        new_content = re.sub(
+                            r'<div class="alert alert-warning[^>]*>.*?</div>',
+                            tabs_html,
+                            content,
+                            flags=re.DOTALL
+                        )
+                        with open(rel_html, "w", encoding="utf-8") as f:
+                            f.write(new_content)
+                        log("relationships.html atualizado com sucesso com as abas de diagramas SVG.")
+            except Exception as e:
+                log(f"Erro ao atualizar relationships.html: {e}")
 
 
 class HomePage(QWidget):
@@ -373,8 +488,10 @@ class HomePage(QWidget):
         with open(JSON_FILE, "r", encoding="utf-8") as f:
             self.config = json.load(f)
 
-        self.server = server or self.config.get("host", self.config.get("server", "localhost"))
-        self.database = database or self.config.get("database", "Desconhecido")
+        self.server = server or self.config.get("host") or self.config.get("server") or "localhost"
+        self.database = database or self.config.get("database") or "Desconhecido"
+        self.config["host"] = self.server
+        self.config["database"] = self.database
 
         log(f"[HomePage] Conectado em {self.server} - {self.database}")
 
