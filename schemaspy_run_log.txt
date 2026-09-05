@@ -14,7 +14,7 @@ SchemaSpy comes with ABSOLUTELY NO WARRANTY.
 SchemaSpy is free software and can be redistributed under the conditions of LGPL version 3 or later.
 http://www.gnu.org/licenses/
 
-INFO  - Running SchemaSpy 7.0.2 with Java(Eclipse Adoptium) 17.0.20.1 PID 22980 [Windows 10, 10.0, amd64, C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\schemaspy-app.jar] started by potat in C:\Users\potat\AntiGravity\Smartview\smartview
+INFO  - Running SchemaSpy 7.0.2 with Java(Eclipse Adoptium) 17.0.20.1 PID 11012 [Windows 10, 10.0, amd64, C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\schemaspy-app.jar] started by potat in C:\Users\potat\AntiGravity\Smartview\smartview
 DEBUG - Debug enabled
 DEBUG - Resolving dbType: C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\mssql-custom.properties ->
 	/C:/Users/potat/AntiGravity/Smartview/smartview/schemaspy/mssql-custom.properties ->
@@ -25,36 +25,52 @@ DEBUG - Using driver 'com.microsoft.sqlserver.jdbc.SQLServerDriver'
 INFO  - Connected to Microsoft SQL Server - 15.00.2180
 DEBUG - supportsSchemasInTableDefinitions: true
 DEBUG - supportsCatalogsInTableDefinitions: true
-DEBUG - Catalog not provided, queried jdbc driver and got 'ECommerceDemo'
+DEBUG - Catalog not provided, queried jdbc driver and got 'teste'
 INFO  - Collecting schema information from database
-DEBUG - Including table Auditoria: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.Auditoria
-DEBUG - Querying primary keys for ECommerceDemo.dbo.Auditoria
-.DEBUG - Retrieved details of ECommerceDemo.dbo.Auditoria
-DEBUG - Including table Clientes: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.Clientes
-DEBUG - Querying primary keys for ECommerceDemo.dbo.Clientes
-.DEBUG - Retrieved details of ECommerceDemo.dbo.Clientes
-DEBUG - Including table Enderecos: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.Enderecos
-DEBUG - Querying primary keys for ECommerceDemo.dbo.Enderecos
-.DEBUG - Retrieved details of ECommerceDemo.dbo.Enderecos
-DEBUG - Including table LogEstoque: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.LogEstoque
-DEBUG - Querying primary keys for ECommerceDemo.dbo.LogEstoque
-.DEBUG - Retrieved details of ECommerceDemo.dbo.LogEstoque
-DEBUG - Including table PedidoItens: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.PedidoItens
-DEBUG - Querying primary keys for ECommerceDemo.dbo.PedidoItens
-.DEBUG - Retrieved details of ECommerceDemo.dbo.PedidoItens
-DEBUG - Including table Pedidos: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.Pedidos
-DEBUG - Querying primary keys for ECommerceDemo.dbo.Pedidos
-.DEBUG - Retrieved details of ECommerceDemo.dbo.Pedidos
-DEBUG - Including table Produtos: matches inclusion pattern '.*'
-DEBUG - Creating Table ECommerceDemo.dbo.Produtos
-DEBUG - Querying primary keys for ECommerceDemo.dbo.Produtos
-.DEBUG - Retrieved details of ECommerceDemo.dbo.Produtos
+DEBUG - Including table auditorias: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.auditorias
+DEBUG - Querying primary keys for teste.dbo.auditorias
+.DEBUG - Retrieved details of teste.dbo.auditorias
+DEBUG - Including table categorias: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.categorias
+DEBUG - Querying primary keys for teste.dbo.categorias
+.DEBUG - Retrieved details of teste.dbo.categorias
+DEBUG - Including table cidades: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.cidades
+DEBUG - Querying primary keys for teste.dbo.cidades
+.DEBUG - Retrieved details of teste.dbo.cidades
+DEBUG - Including table clientes: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.clientes
+DEBUG - Querying primary keys for teste.dbo.clientes
+.DEBUG - Retrieved details of teste.dbo.clientes
+DEBUG - Including table composicao: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.composicao
+DEBUG - Querying primary keys for teste.dbo.composicao
+.DEBUG - Retrieved details of teste.dbo.composicao
+DEBUG - Including table ingredientes: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.ingredientes
+DEBUG - Querying primary keys for teste.dbo.ingredientes
+.DEBUG - Retrieved details of teste.dbo.ingredientes
+DEBUG - Including table pratos: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.pratos
+DEBUG - Querying primary keys for teste.dbo.pratos
+.DEBUG - Retrieved details of teste.dbo.pratos
+DEBUG - Including table Tabela_Teste: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.Tabela_Teste
+DEBUG - Querying primary keys for teste.dbo.Tabela_Teste
+.DEBUG - Retrieved details of teste.dbo.Tabela_Teste
+DEBUG - Including table unidades: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.unidades
+DEBUG - Querying primary keys for teste.dbo.unidades
+.DEBUG - Retrieved details of teste.dbo.unidades
+DEBUG - Including table vendas: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.vendas
+DEBUG - Querying primary keys for teste.dbo.vendas
+.DEBUG - Retrieved details of teste.dbo.vendas
+DEBUG - Including table vendedores: matches inclusion pattern '.*'
+DEBUG - Creating Table teste.dbo.vendedores
+DEBUG - Querying primary keys for teste.dbo.vendedores
+.DEBUG - Retrieved details of teste.dbo.vendedores
 DEBUG - SELECT CAST(value AS NVARCHAR(MAX)) as catalog_comment FROM sys.extended_properties WHERE class=0 AND name = 'MS_Description' AND minor_id =0 AND major_id =0 []
 DEBUG - SELECT CAST(s.value AS NVARCHAR(MAX)) as schema_comment FROM INFORMATION_SCHEMA.SCHEMATA i_s INNER JOIN sys.extended_properties s ON s.major_id = SCHEMA_ID(i_s.SCHEMA_NAME ) AND s.minor_id = 0 AND s.class = 3 AND s.name = 'MS_Description' WHERE i_s.SCHEMA_NAME = ?  [dbo]
 DEBUG - SELECT tbls.name AS table_name, cnstrs.name AS constraint_name, cmts.text AS text FROM sysobjects cnstrs INNER JOIN sysobjects tbls ON cnstrs.parent_obj = tbls.id INNER JOIN syscomments cmts ON cmts.id = cnstrs.id WHERE cnstrs.type = 'C' []
@@ -63,23 +79,15 @@ DEBUG - SELECT i_c.table_name as table_name, i_c.column_name as column_name, CAS
 
 INFO  - Collection of schema information finished after 0 seconds
 INFO  - Connecting tables and views
-...DEBUG - Adding foreign key constraint 'FK__PedidoIte__IDPed__3B75D760' to ECommerceDemo.dbo.PedidoItens
-DEBUG - Adding foreign key constraint 'FK__PedidoIte__IDPro__3C69FB99' to ECommerceDemo.dbo.PedidoItens
-...DEBUG - Adding foreign key constraint 'FK__Enderecos__IDCli__2D27B809' to ECommerceDemo.dbo.Enderecos
-.DEBUG - Adding foreign key constraint 'FK__Pedidos__IDClien__37A5467C' to ECommerceDemo.dbo.Pedidos
-
+.....DEBUG - Adding foreign key constraint 'FK__vendas__cod_vend__4CA06362' to teste.dbo.vendas
+......
 INFO  - Tables and views connected after 0 seconds
 INFO  - Graphviz renderer set to ':cairo'
 INFO  - Writing/graphing summaries
-DEBUG - Adding foreign key constraint 'Implied Constraint' to ECommerceDemo.dbo.LogEstoque
 DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.real.compact.dot -orelationships.real.compact.svg
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.real.compact.dot -orelationships.real.compact.svg: Error: dot: can't open relationships.real.compact.dot: Permission denied
 DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.real.large.dot -orelationships.real.large.svg
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.real.large.dot -orelationships.real.large.svg: Error: dot: can't open relationships.real.large.dot: Permission denied
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.compact.dot -orelationships.implied.compact.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.compact.dot -orelationships.implied.compact.svg: Error: dot: can't open relationships.implied.compact.dot: Permission denied
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.large.dot -orelationships.implied.large.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.large.dot -orelationships.implied.large.svg: Error: dot: can't open relationships.implied.large.dot: Permission denied
 ERROR - RelationShipDiagramError
 org.schemaspy.output.OutputException: Failed to produce diagram for: C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\output\diagrams\summary\relationships.real.compact.dot
 	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateSummaryDiagrams(MustacheSummaryDiagramFactory.java:97)
@@ -131,370 +139,150 @@ Caused by: org.schemaspy.output.diagram.RenderException: 'C:\Users\potat\AntiGra
 	at org.schemaspy.output.diagram.graphviz.GraphvizDot.render(GraphvizDot.java:250)
 	at org.schemaspy.output.diagram.SummaryDiagram.generateSummaryDiagram(SummaryDiagram.java:21)
 	... 16 common frames omitted
-ERROR - RelationShipDiagramError
-org.schemaspy.output.OutputException: Failed to produce diagram for: C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\output\diagrams\summary\relationships.implied.compact.dot
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateImpliedCompact(MustacheSummaryDiagramFactory.java:139)
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateSummaryDiagrams(MustacheSummaryDiagramFactory.java:104)
-	at org.schemaspy.SchemaAnalyzer.generateHtmlDoc(SchemaAnalyzer.java:419)
-	at org.schemaspy.SchemaAnalyzer.analyze(SchemaAnalyzer.java:321)
-	at org.schemaspy.SchemaAnalyzer.analyze(SchemaAnalyzer.java:159)
-	at org.schemaspy.cli.SchemaSpyRunner.run(SchemaSpyRunner.java:66)
-	at org.schemaspy.Main.run(Main.java:144)
-	at org.schemaspy.Main.main(Main.java:89)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
-	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
-	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95)
-	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
-	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
-Caused by: org.schemaspy.output.diagram.RenderException: Failed to generate summary diagram
-	at org.schemaspy.output.diagram.SummaryDiagram.generateSummaryDiagram(SummaryDiagram.java:24)
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateImpliedCompact(MustacheSummaryDiagramFactory.java:132)
-	... 15 common frames omitted
-Caused by: org.schemaspy.output.diagram.RenderException: 'C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.compact.dot -orelationships.implied.compact.svg' failed with exception org.schemaspy.output.diagram.RenderException: 'C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.compact.dot -orelationships.implied.compact.svg' failed with return code 2
-	at org.schemaspy.output.diagram.graphviz.GraphvizDot.render(GraphvizDot.java:250)
-	at org.schemaspy.output.diagram.SummaryDiagram.generateSummaryDiagram(SummaryDiagram.java:21)
-	... 16 common frames omitted
-ERROR - RelationShipDiagramError
-org.schemaspy.output.OutputException: Failed to produce diagram for: C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\output\diagrams\summary\relationships.implied.large.dot
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateImpliedLarge(MustacheSummaryDiagramFactory.java:154)
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateSummaryDiagrams(MustacheSummaryDiagramFactory.java:105)
-	at org.schemaspy.SchemaAnalyzer.generateHtmlDoc(SchemaAnalyzer.java:419)
-	at org.schemaspy.SchemaAnalyzer.analyze(SchemaAnalyzer.java:321)
-	at org.schemaspy.SchemaAnalyzer.analyze(SchemaAnalyzer.java:159)
-	at org.schemaspy.cli.SchemaSpyRunner.run(SchemaSpyRunner.java:66)
-	at org.schemaspy.Main.run(Main.java:144)
-	at org.schemaspy.Main.main(Main.java:89)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
-	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
-	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
-	at java.base/java.lang.reflect.Method.invoke(Unknown Source)
-	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:49)
-	at org.springframework.boot.loader.Launcher.launch(Launcher.java:95)
-	at org.springframework.boot.loader.Launcher.launch(Launcher.java:58)
-	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:65)
-Caused by: org.schemaspy.output.diagram.RenderException: Failed to generate summary diagram
-	at org.schemaspy.output.diagram.SummaryDiagram.generateSummaryDiagram(SummaryDiagram.java:24)
-	at org.schemaspy.output.html.mustache.diagrams.MustacheSummaryDiagramFactory.generateImpliedLarge(MustacheSummaryDiagramFactory.java:147)
-	... 15 common frames omitted
-Caused by: org.schemaspy.output.diagram.RenderException: 'C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.large.dot -orelationships.implied.large.svg' failed with exception org.schemaspy.output.diagram.RenderException: 'C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg relationships.implied.large.dot -orelationships.implied.large.svg' failed with return code 2
-	at org.schemaspy.output.diagram.graphviz.GraphvizDot.render(GraphvizDot.java:250)
-	at org.schemaspy.output.diagram.SummaryDiagram.generateSummaryDiagram(SummaryDiagram.java:21)
-	... 16 common frames omitted
 .DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node auditorias
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node Auditoria
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node categorias
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
 WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node LogEstoque
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node cidades
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node clientes
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node composicao
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node ingredientes
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node pratos
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node Tabela_Teste
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg orphans.dot -oorphans.svg: in label of node unidades
 .
 INFO  - Summaries created after 0 seconds
 INFO  - Writing routines pages
 INFO  - Wrote 0 routines pages in 0 seconds
 INFO  - Creating table/view pages
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.1degree.dot -oLogEstoque.1degree.svg: in label of node LogEstoque
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: in label of node LogEstoque
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied1degrees.dot -oLogEstoque.implied1degrees.svg: in label of node Produtos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: in label of node LogEstoque
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: in label of node Produtos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg LogEstoque.implied2degrees.dot -oLogEstoque.implied2degrees.svg: in label of node PedidoItens
-DEBUG - Writing details of LogEstoque
-DEBUG - Writing table page -> LogEstoque
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: in label of node Enderecos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: in label of node Clientes
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.1degree.dot -oClientes.1degree.svg: in label of node Pedidos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: in label of node Enderecos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: in label of node Clientes
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Clientes.2degrees.dot -oClientes.2degrees.svg: in label of node Pedidos
-DEBUG - Writing details of Clientes
-DEBUG - Writing table page -> Clientes
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.1degree.dot -oPedidoItens.1degree.svg: in label of node Produtos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: in label of node Produtos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.2degrees.dot -oPedidoItens.2degrees.svg: in label of node Clientes
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied1degrees.dot -oPedidoItens.implied1degrees.svg: in label of node Produtos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: in label of node LogEstoque
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: in label of node Produtos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg PedidoItens.implied2degrees.dot -oPedidoItens.implied2degrees.svg: in label of node Clientes
-DEBUG - Writing details of PedidoItens
-DEBUG - Writing table page -> PedidoItens
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Auditoria.1degree.dot -oAuditoria.1degree.svg: in label of node Auditoria
-DEBUG - Writing details of Auditoria
-DEBUG - Writing table page -> Auditoria
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.1degree.dot -oProdutos.1degree.svg: in label of node Produtos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.2degrees.dot -oProdutos.2degrees.svg: in label of node Produtos
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: in label of node LogEstoque
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: in label of node Produtos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied1degrees.dot -oProdutos.implied1degrees.svg: in label of node PedidoItens
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: in label of node LogEstoque
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: in label of node Produtos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Produtos.implied2degrees.dot -oProdutos.implied2degrees.svg: in label of node Pedidos
-DEBUG - Writing details of Produtos
-DEBUG - Writing table page -> Produtos
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: in label of node Enderecos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.1degree.dot -oEnderecos.1degree.svg: in label of node Clientes
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: in label of node Enderecos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: in label of node Clientes
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Enderecos.2degrees.dot -oEnderecos.2degrees.svg: in label of node Pedidos
-DEBUG - Writing details of Enderecos
-DEBUG - Writing table page -> Enderecos
-.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.1degree.dot -oPedidos.1degree.svg: in label of node Clientes
-DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: in label of node Enderecos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: in label of node Clientes
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: in label of node PedidoItens
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: in label of node Pedidos
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: Warning: cell size too small for content
-WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Pedidos.2degrees.dot -oPedidos.2degrees.svg: in label of node Produtos
-DEBUG - Writing details of Pedidos
-DEBUG - Writing table page -> Pedidos
+DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg auditorias.1degree.dot -oauditorias.1degree.svg: in label of node auditorias
+DEBUG - Writing details of auditorias
+DEBUG - Writing table page -> auditorias
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg categorias.1degree.dot -ocategorias.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg categorias.1degree.dot -ocategorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg categorias.1degree.dot -ocategorias.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg categorias.1degree.dot -ocategorias.1degree.svg: in label of node categorias
+DEBUG - Writing details of categorias
+DEBUG - Writing table page -> categorias
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg clientes.1degree.dot -oclientes.1degree.svg: in label of node clientes
+DEBUG - Writing details of clientes
+DEBUG - Writing table page -> clientes
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg ingredientes.1degree.dot -oingredientes.1degree.svg: in label of node ingredientes
+DEBUG - Writing details of ingredientes
+DEBUG - Writing table page -> ingredientes
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: in label of node vendas
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendas.1degree.dot -ovendas.1degree.svg: in label of node vendedores
+DEBUG - Writing details of vendas
+DEBUG - Writing table page -> vendas
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: in label of node vendas
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg vendedores.1degree.dot -ovendedores.1degree.svg: in label of node vendedores
+DEBUG - Writing details of vendedores
+DEBUG - Writing table page -> vendedores
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg composicao.1degree.dot -ocomposicao.1degree.svg: in label of node composicao
+DEBUG - Writing details of composicao
+DEBUG - Writing table page -> composicao
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg unidades.1degree.dot -ounidades.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg unidades.1degree.dot -ounidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg unidades.1degree.dot -ounidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg unidades.1degree.dot -ounidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg unidades.1degree.dot -ounidades.1degree.svg: in label of node unidades
+DEBUG - Writing details of unidades
+DEBUG - Writing table page -> unidades
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg Tabela_Teste.1degree.dot -oTabela_Teste.1degree.svg: in label of node Tabela_Teste
+DEBUG - Writing details of Tabela_Teste
+DEBUG - Writing table page -> Tabela_Teste
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg cidades.1degree.dot -ocidades.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg cidades.1degree.dot -ocidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg cidades.1degree.dot -ocidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg cidades.1degree.dot -ocidades.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg cidades.1degree.dot -ocidades.1degree.svg: in label of node cidades
+DEBUG - Writing details of cidades
+DEBUG - Writing table page -> cidades
+.DEBUG - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg: Warning: cell size too small for content
+WARN  - C:\Users\potat\AntiGravity\Smartview\smartview\graphviz\bin\dot -Tsvg pratos.1degree.dot -opratos.1degree.svg: in label of node pratos
+DEBUG - Writing details of pratos
+DEBUG - Writing table page -> pratos
 .
 INFO  - Created table/view pages after 1 seconds
 INFO  - View the results by opening C:\Users\potat\AntiGravity\Smartview\smartview\schemaspy\output\index.html
